@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".display.information.FragmentInformation">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white">
+
+            <TableRow
+                android:background="#E53935">
+
+                <TextView
+                    android:text="STAT"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="14sp"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:text="VALUE"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:padding="14sp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Evaluate"
+                    android:background="@drawable/textview_borders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterEvalute"
+                    android:text="10.10"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Defense"
+                    android:background="@drawable/textview_borders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterDefense"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_borders_values"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Agility"
+                    android:background="@drawable/textview_borders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterAgility"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders_values"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Technique"
+                    android:layout_width="0dp"
+                    android:background="@drawable/textview_borders"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterTechnique"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders_values"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Arrivals"
+                    android:layout_width="0dp"
+                    android:background="@drawable/textview_borders"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterArriavls"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_borders_values"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Goals"
+                    android:layout_width="0dp"
+                    android:background="@drawable/textview_borders"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterGoals"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textview_borders_values"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Assists"
+                    android:background="@drawable/textview_borders"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterAssist"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:background="@drawable/textview_borders_values"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Own Goals"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterAutogoals"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Wins"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:background="@drawable/textview_borders"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterWins"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Losses"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterLosses"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Draws"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterDraw"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Score"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterScore"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+
+            <TableRow
+                android:background="@color/white">
+
+                <TextView
+                    android:text="Bonus Points"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:background="@drawable/textview_borders"
+                    android:padding="8dp"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/tvEnterBonusPoints"
+                    android:text="10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:background="@drawable/textview_borders_values"
+                    android:layout_weight="4"
+                    android:layout_gravity="center_horizontal"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</FrameLayout>

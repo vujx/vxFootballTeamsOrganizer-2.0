@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">SoccerNewTry</string>
+    <string name="random_team_picker">Random team picker</string>
+    <string name="choose_your_own_team">choose your own team</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="players">Players</string>
+    <string name="information">Information</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="new_player">New player</string>
+    <string name="enter_name_with_max_length_10">Enter name with max length 10</string>
+    <string name="enter_defense_from_1_100">Enter defense from 1-100</string>
+    <string name="enter_agility_from_1_100">Enter agility from 1-100</string>
+    <string name="enter_technique_from_1_100">Enter technique from 1-100</string>
+    <string name="name">Name</string>
+    <string name="defense">Defense</string>
+    <string name="agility">Agility</string>
+    <string name="tecnique">tecnique</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="player_selected_0">Player selected 0</string>
+    <string name="_100">100</string>
+    <string name="submit_teams">Submit teams</string>
+    <string name="create_teams_again">create teams again</string>
+    <string name="match_balance_80">Match balance: 80%</string>
+    <string name="blue_team">blue team</string>
+    <string name="red_team">red_team</string>
+    <string name="red_team_player">Red team player</string>
+    <string name="blue">blue</string>
+    <string name="red">red</string>
+    <string name="blue_team_players">Blue team players</string>
+</resources>

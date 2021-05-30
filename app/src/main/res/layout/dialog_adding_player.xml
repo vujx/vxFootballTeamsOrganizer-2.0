@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:background="@color/white"
+    android:forceDarkAllowed="false"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="@string/new_player"
+        android:maxLines="1"
+        android:textSize="24sp"
+        style="@style/edit_players_at_adding" />
+
+
+    <EditText
+        android:id="@+id/etNewNameDialog"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        android:inputType="text"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:nextFocusDown="@id/etDefenseDialog"
+        android:hint="@string/enter_name_with_max_length_10"
+        style="@style/editText_editPlayers" />
+
+    <EditText
+        android:id="@+id/etDefenseDialog"
+        android:maxLines="1"
+        android:inputType="number"
+        android:hint="@string/enter_defense_from_1_100"
+        style="@style/editText_editPlayers" />
+
+    <EditText
+        android:id="@+id/etAgilityDialog"
+        android:maxLines="1"
+        android:inputType="number"
+        android:hint="@string/enter_agility_from_1_100"
+        style="@style/editText_editPlayers" />
+
+    <EditText
+        android:id="@+id/etTehnicqueDialog"
+        android:maxLines="1"
+        android:inputType="number"
+        android:hint="@string/enter_technique_from_1_100"
+        style="@style/editText_editPlayers" />
+
+
+</LinearLayout>
