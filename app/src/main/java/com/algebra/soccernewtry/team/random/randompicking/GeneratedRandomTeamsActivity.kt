@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.fuca.team.random.FixPlayers
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityGeneratedRandomTeamsBinding
+import com.algebra.soccernewtry.dialog.DialogForSubmitTeams
+import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import com.algebra.soccernewtry.player.model.Player
@@ -72,16 +74,18 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
         }
 
         binding.btnSubmitTeams.setOnClickListener {
-           /* val checkDialog = DialogForSubmitTeams(redTeam, blueTeam)
+            val checkDialog = DialogForSubmitTeams(redTeam, blueTeam)
             checkDialog.show(supportFragmentManager, "submitTeams2")
-            checkDialog.listenerGetChangePlayer = object: DialogForSubmitTeams.ListenerGetChangePlayer{
-                override fun getChangedPlayer(check: Boolean) {
+            checkDialog.listener = object: DialogForSubmitTeams.Listener{
+                override fun checkPlayers(check: Boolean) {
                     if(check){
-                        val intent = Intent(this@RandomTeamsActivity, SubmitTeamActivity::class.java)
+                        val intent = Intent(this@GeneratedRandomTeamsActivity, SubmitTeamsActivity::class.java)
+                        intent.putExtra("", blueTeam as ArrayList<Player>)
+                        intent.putExtra("", redTeam as ArrayList<Player>)
                         startActivity(intent)
                     }
                 }
-            }*/
+            }
         }
     }
 

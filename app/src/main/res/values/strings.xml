@@ -30,4 +30,7 @@
     <string name="blue">blue</string>
     <string name="red">red</string>
     <string name="blue_team_players">Blue team players</string>
+    <string name="goal">goal</string>
+    <string name="end_match">end match</string>
+    <string name="_0_0">0:0</string>
 </resources>

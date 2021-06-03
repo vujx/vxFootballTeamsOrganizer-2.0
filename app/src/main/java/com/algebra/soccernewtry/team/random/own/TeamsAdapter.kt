@@ -21,6 +21,8 @@ class TeamsAdapter: RecyclerView.Adapter<TeamsAdapter.YourOwnTeamViewHolder>(){
         notifyDataSetChanged()
     }
 
+    fun getListOfPlayers(): List<Player> = listOfChoosenPlayers
+
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getItemViewType(position: Int): Int {

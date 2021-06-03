@@ -10,17 +10,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Soccer">
-        <activity android:name=".team.random.own.ChooseYourOwnActivity"></activity>
-        <activity android:name=".team.random.randompicking.GeneratedRandomTeamsActivity" />
-        <activity android:name=".team.random.randomChoosing.RandomChoosingTeamActivity" />
-        <activity android:name=".display.InformationActivity" />
-        <activity android:name=".player.main.PlayerActivity" />
-        <activity android:name=".CreateTeamsActivity">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".game.SubmitTeamsActivity"
+            android:theme="@style/Theme.Soccer">
+
+        </activity>
+        <activity android:name=".team.random.own.ChooseYourOwnActivity"
+            android:theme="@style/Theme.Soccer"/>
+        <activity android:name=".team.random.randompicking.GeneratedRandomTeamsActivity"
+            android:theme="@style/Theme.Soccer"/>
+        <activity android:name=".team.random.randomChoosing.RandomChoosingTeamActivity"
+            android:theme="@style/Theme.Soccer"/>
+        <activity android:name=".display.InformationActivity"
+            android:theme="@style/Theme.Soccer"/>
+        <activity android:name=".player.main.PlayerActivity"
+            android:theme="@style/Theme.Soccer"/>
+        <activity android:name=".CreateTeamsActivity"
+            android:theme="@style/Theme.Soccer">
+
         </activity>
     </application>
 

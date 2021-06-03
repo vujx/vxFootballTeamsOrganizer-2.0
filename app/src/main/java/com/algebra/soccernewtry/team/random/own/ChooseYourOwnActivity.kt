@@ -1,5 +1,6 @@
 package com.algebra.soccernewtry.team.random.own
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,7 +8,12 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.algebra.fuca.player.adding.PlayerAdapter
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityChooseYourOwnBinding
+import com.algebra.soccernewtry.dialog.DialogForSubmitTeams
+import com.algebra.soccernewtry.displayMessage
+import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import com.algebra.soccernewtry.player.addplayer.DialogForAddingPlayer
@@ -82,12 +88,14 @@ class ChooseYourOwnActivity : AppCompatActivity() {
         viewModel.getAllPlayers().observe(this, Observer {
             if (it.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
             else binding.tvDisplay.text = ""
-            adapter.setList(it)
+            adapter.setList(it.filter {
+                it.isDeleted == 0
+            })
             var countPlayerRed = 0
             var countPlayerBlue = 0
             it.forEach {
-                if (it.teamId == 1) countPlayerRed++
-                else if(it.teamId == 2) countPlayerBlue++
+                if (it.teamId == 1 && it.isDeleted != 1) countPlayerRed++
+                else if(it.teamId == 2 && it.isDeleted != 1) countPlayerBlue++
             }
             binding.tvRedTeamsPlayers.text = "Red team players $countPlayerRed"
             binding.tvBlueTeamsPlayers.text = "Blue team players $countPlayerBlue"
@@ -97,11 +105,34 @@ class ChooseYourOwnActivity : AppCompatActivity() {
 
     private fun clickListener() {
         binding.btnAddInRecaclerView.setOnClickListener {
+            if(PlayerAdapter.listOfPlayers.isEmpty())
+                PlayerAdapter.listOfPlayers.addAll(adapter.getListOfPlayers())
             val dialog = DialogForAddingPlayer()
             dialog.show(supportFragmentManager, "Adding")
             dialog.listenerGetChangePlayer = object : DialogForAddingPlayer.Listener {
                 override fun addNewPlayer(player: Player) {
                     viewModel.addPlayer(player)
+                }
+            }
+        }
+        binding.btnSubmitTeams.setOnClickListener {
+            if(redTeam.size < 1 || blueTeam.size < 1) displayMessage(this, "Please select at least one player per team")
+            else{
+                val dialog = DialogForSubmitTeams(redTeam.sortedBy {
+                    it.name.toLowerCase()
+                }, blueTeam.sortedBy {
+                    it.name.toLowerCase()
+                })
+                dialog.show(supportFragmentManager, "submitteams")
+                dialog.listener = object: DialogForSubmitTeams.Listener{
+                    override fun checkPlayers(check: Boolean) {
+                        if(check){
+                            val intent = Intent(this@ChooseYourOwnActivity, SubmitTeamsActivity::class.java)
+                            intent.putExtra(Constants.BLUE_TEAM, blueTeam as ArrayList<Player>)
+                            intent.putExtra(Constants.RED_TEAM, redTeam as ArrayList<Player>)
+                            startActivity(intent)
+                        }
+                    }
                 }
             }
         }

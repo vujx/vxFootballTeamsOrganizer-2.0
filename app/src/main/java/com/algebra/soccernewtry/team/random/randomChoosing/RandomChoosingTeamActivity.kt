@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.algebra.fuca.player.adding.PlayerAdapter
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityRandomChoosingTeamBinding
 import com.algebra.soccernewtry.displayMessage
@@ -58,10 +59,12 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
         viewModel.getAllPlayers().observe(this, Observer {
             if(it.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
             else binding.tvDisplay.text = ""
-            adapter.setList(it)
+            adapter.setList(it.filter {
+                it.isDeleted == 0
+            })
             var countPlayerSelected = 0
             it.forEach {
-               if(it.isPlaying == 1) countPlayerSelected++
+               if(it.isPlaying == 1 && it.isDeleted != 1) countPlayerSelected++
             }
             binding.tvSelectedPlayers.text = "Player selected $countPlayerSelected"
             binding.progressBar.visibility = View.GONE
@@ -70,6 +73,8 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
 
     private fun clickListener(){
         binding.btnAddInRecaclerView.setOnClickListener {
+            if(PlayerAdapter.listOfPlayers.isEmpty())
+                PlayerAdapter.listOfPlayers.addAll(adapter.getListOfPlayers())
             val dialog = DialogForAddingPlayer()
             dialog.show(supportFragmentManager, "Adding")
             dialog.listenerGetChangePlayer = object: DialogForAddingPlayer.Listener{

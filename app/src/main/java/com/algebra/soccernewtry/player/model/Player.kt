@@ -32,5 +32,5 @@ data class Player(
     val bonusPoints: Int,
 
     @ColumnInfo(name = "isDeleted")
-    val isDeleted: Int
+    var isDeleted: Int
 ): Serializable

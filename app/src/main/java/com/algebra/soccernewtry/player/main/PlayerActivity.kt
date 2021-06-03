@@ -44,7 +44,9 @@ class PlayerActivity : AppCompatActivity() {
         viewModel.getAllPlayers().observe(this, Observer {
             if(it.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
             else binding.tvDisplay.text = ""
-            adapter.setList(it)
+            adapter.setList(it.filter {
+                it.isDeleted == 0
+            })
             binding.progressBar.visibility = View.GONE
         })
     }
@@ -58,7 +60,8 @@ class PlayerActivity : AppCompatActivity() {
                 dialog.show(supportFragmentManager, "Remove player")
                 dialog.listener = object: DialogCheck.Listener{
                     override fun getPress(isPress: Boolean) {
-                        viewModel.deletePlayer(player.id)
+                        player.isDeleted = 1
+                        viewModel.addPlayer(player)
                     }
                 }
             }
