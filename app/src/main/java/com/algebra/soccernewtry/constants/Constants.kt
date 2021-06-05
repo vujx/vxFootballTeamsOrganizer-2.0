@@ -7,4 +7,5 @@ object Constants {
     const val BLUE_TEAM = "BLUETEAM"
     const val RED_TEAM_FRAGMENT = "REDTEAMFRAGMENT"
     const val BLUE_TEAM_FRAGMENT = "BLUETEAMFRAGMENT"
+    const val BASE_URL = "http://185.203.18.254:3994"
 }

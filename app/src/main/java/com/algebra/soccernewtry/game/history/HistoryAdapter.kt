@@ -27,11 +27,7 @@ class HistoryAdapter(): RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>()
     }
 
     fun editResult(resultForHistory: History){
-        var position = 0
-        for(counter: Int in 0 until listOfResults.size){
-            if(resultForHistory.id == listOfResults[counter].id) position = counter
-        }
-        listOfResults[position] = resultForHistory
+        listOfResults[positonOfEdit] = resultForHistory
         notifyDataSetChanged()
     }
 
@@ -51,7 +47,10 @@ class HistoryAdapter(): RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>()
                 popMenu.inflate(R.menu.menu_history_options)
                 popMenu.setOnMenuItemClickListener {
                     when(it.itemId){
-                        R.id.menuEditHistory -> listener?.editHistory(listOfResults[layoutPosition])
+                        R.id.menuEditHistory -> {
+                            positonOfEdit = layoutPosition
+                            listener?.editHistory(listOfResults[layoutPosition])
+                        }
                         R.id.menuDeleteHistory -> listener?.deleteHistory(listOfResults[layoutPosition], layoutPosition)
                     }
                     return@setOnMenuItemClickListener true
@@ -62,19 +61,19 @@ class HistoryAdapter(): RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>()
 
         fun bind(resultForHistory: History){
             itemResult.tvScore.text = "${resultForHistory.goalRed}:${resultForHistory.goalBlue}"
-            if(resultForHistory.goalGeter.isNotBlank() && resultForHistory.assisst.isNotBlank()) {
+            if(resultForHistory.goalGeter?.isNotBlank()!! && resultForHistory.assisst?.isNotBlank()!!) {
                 itemResult.tvGoalGeter.text = "${resultForHistory.goalGeter}"
                 itemResult.tvAssistant.text = "(${resultForHistory.assisst})"
             } else if(resultForHistory.goalGeter.isNotBlank()) {
                 itemResult.tvGoalGeter.text = resultForHistory.goalGeter
                 itemResult.tvAssistant.text = ""
             }
-            else if(resultForHistory.assisst.isBlank() && resultForHistory.goalGeter.isBlank()) {
+            else if(resultForHistory.assisst?.isBlank()!! && resultForHistory.goalGeter.isBlank()) {
                 itemResult.tvGoalGeter.text = resultForHistory.autoGoal
                 itemResult.tvAssistant.text = ""
             }
 
-            if(resultForHistory.goalGeter.isEmpty() && resultForHistory.assisst.isEmpty()) itemResult.contraintLayout.setBackgroundColor(Color.WHITE)
+            if(resultForHistory.goalGeter.isEmpty() && resultForHistory.assisst?.isEmpty()!!) itemResult.contraintLayout.setBackgroundColor(Color.WHITE)
             else if(resultForHistory.isRed) itemResult.contraintLayout.setBackgroundColor(Color.RED)
             else itemResult.contraintLayout.setBackgroundColor(Color.argb(225, 30, 136, 229))
         }
@@ -94,5 +93,9 @@ class HistoryAdapter(): RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>()
     interface Listener{
         fun editHistory(item: History)
         fun deleteHistory(item: History, position: Int)
+    }
+
+    companion object{
+        var positonOfEdit = 0
     }
 }

@@ -1,6 +1,7 @@
 package com.algebra.soccernewtry.team.random.randompicking
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +45,9 @@ class RandomBlueTeamAdapter: RecyclerView.Adapter<RandomBlueTeamAdapter.RandomVi
 
         @SuppressLint("SetTextI18n")
         fun bind(player1: Player){
+            Log.d("IspisnameBlue", "Ime: ${player1.name}")
             itemPlayer.player1.text = player1.name
-            if(player1.name == RandomMakeTeam.lastPlayer.name){
+            if(player1.name.toLowerCase() == RandomMakeTeam.lastPlayer.name.toLowerCase() || player1.id == -1){
                 itemPlayer.checkBoxForFixingPlayers.visibility = View.GONE
                 itemPlayer.layoutBottom.visibility = View.GONE
             }

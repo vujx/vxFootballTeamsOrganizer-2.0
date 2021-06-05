@@ -2,10 +2,9 @@ package com.algebra.soccernewtry.di
 
 import android.content.Context
 import androidx.room.Room
-import com.algebra.soccernewtry.historyOfGame.database.AppDatabaseMatches
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.algebra.soccernewtry.player.database.AppDatabaseAllPlayers
-import com.algebra.soccernewtry.runningGame.database.AppDatabaseRunningGame
-import com.algebra.soccernewtry.stateactivity.database.AppDatabaseStateOfActivity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,24 +19,18 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): AppDatabaseAllPlayers{
-        return Room.databaseBuilder(context, AppDatabaseAllPlayers::class.java, "allplayers").build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideDatabaseAllMacthes(@ApplicationContext context: Context): AppDatabaseMatches{
-        return Room.databaseBuilder(context, AppDatabaseMatches::class.java, "matches").build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideDatabaseStateOfActivity(@ApplicationContext context: Context): AppDatabaseStateOfActivity{
-        return Room.databaseBuilder(context, AppDatabaseStateOfActivity::class.java, "stateactivity").build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideDatabaseRunningGame(@ApplicationContext context: Context): AppDatabaseRunningGame{
-        return Room.databaseBuilder(context, AppDatabaseRunningGame::class.java, "runninggame").build()
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        val MIGRATION_3_4 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+            }
+        }
+        return Room.databaseBuilder(context, AppDatabaseAllPlayers::class.java, "mydb22").addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4).build()
     }
 }

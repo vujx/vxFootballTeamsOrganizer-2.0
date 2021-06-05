@@ -1,4 +1,4 @@
-package com.algebra.soccernewtry.game.teams.red.blue
+package com.algebra.soccernewtry.game.teams.blue
 
 import android.annotation.SuppressLint
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import com.algebra.soccernewtry.R
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
-import com.algebra.soccernewtry.game.teams.red.red.RedTeamFragment
+import com.algebra.soccernewtry.game.teams.red.RedTeamFragment
 
 class DialogActionBlueTeam {
 

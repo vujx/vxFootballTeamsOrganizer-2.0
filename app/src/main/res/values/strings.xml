@@ -25,7 +25,7 @@
     <string name="create_teams_again">create teams again</string>
     <string name="match_balance_80">Match balance: 80%</string>
     <string name="blue_team">blue team</string>
-    <string name="red_team">red_team</string>
+    <string name="red_team">red team</string>
     <string name="red_team_player">Red team player</string>
     <string name="blue">blue</string>
     <string name="red">red</string>
@@ -33,4 +33,7 @@
     <string name="goal">goal</string>
     <string name="end_match">end match</string>
     <string name="_0_0">0:0</string>
+    <string name="wins">wins</string>
+    <string name="loses">loses</string>
+    <string name="draws">Draws</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.algebra.soccernewtry.team.random.randompicking
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,9 +34,11 @@ class RandomRedTeamAdapter: RecyclerView.Adapter<RandomRedTeamAdapter.RandomRedT
         }
         @SuppressLint("SetTextI18n")
         fun bind(player1: Player){
+            Log.d("IspisnameRed", "Ime: ${player1.name}")
             itemRed.player1.text = player1.name
-            if(player1.name == RandomMakeTeam.lastPlayer.name){
-                itemRed.replaceItems.visibility = View.GONE
+            if(player1.name.toLowerCase() == RandomMakeTeam.lastPlayer.name.toLowerCase() || player1.id == -1){
+                Log.d("IspisRedTeamZamj", player1.name)
+            //    itemRed.replaceItems.visibility = View.GONE
                 itemRed.layoutBottom.visibility = View.GONE
             }
         }

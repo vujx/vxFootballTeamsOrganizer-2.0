@@ -1,4 +1,4 @@
-package com.algebra.soccernewtry.game.teams.red.red
+package com.algebra.soccernewtry.game.teams.red
 
 import android.annotation.SuppressLint
 import android.content.Context

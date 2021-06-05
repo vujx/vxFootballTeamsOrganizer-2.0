@@ -1,20 +1,19 @@
-package com.algebra.soccernewtry.game.teams.red.blue
+package com.algebra.soccernewtry.game.teams.blue
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.fuca.game.teams.SubmitTeamsAdapter
-import com.algebra.soccernewtry.R
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.FragmentBlueTeamBinding
 import com.algebra.soccernewtry.displayMessage
 import com.algebra.soccernewtry.game.PlayerCheck
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
-import com.algebra.soccernewtry.game.teams.red.red.RedTeamFragment
+import com.algebra.soccernewtry.game.teams.SameMethodInFragments
+import com.algebra.soccernewtry.game.teams.red.RedTeamFragment
 import com.algebra.soccernewtry.player.model.Player
 
 class BlueTeamFragment : Fragment() {
@@ -31,8 +30,8 @@ class BlueTeamFragment : Fragment() {
     private val blueTeamAction = BlueTeamAction()
     private val dialogs = DialogActionBlueTeam()
     lateinit var blueTeamList:List<Player>
-    lateinit var checkListOfPlayers: MutableList<PlayerCheck>
     private val adapter = SubmitTeamsAdapter()
+    private val sameMethods = SameMethodInFragments()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentBlueTeamBinding.inflate(inflater, container, false)
@@ -50,7 +49,7 @@ class BlueTeamFragment : Fragment() {
 
         checkListOfPlayers = mutableListOf()
         blueTeamList.forEach {
-            checkListOfPlayers.add(PlayerCheck(0, it.name, false, false, false))
+            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
         }
         adapter.setList(checkListOfPlayers)
 
@@ -92,7 +91,7 @@ class BlueTeamFragment : Fragment() {
         checkAutoGoal = false
         checkListOfPlayers = mutableListOf()
         blueTeamList.forEach {
-            checkListOfPlayers.add(PlayerCheck(0, it.name, false, false, false))
+            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
         }
         (activity as SubmitTeamsActivity).setScoreRed()
         adapter.setList(checkListOfPlayers)
@@ -113,6 +112,9 @@ class BlueTeamFragment : Fragment() {
                 else -> displayMessage(activity as SubmitTeamsActivity, "There must be a goalgetter!")
             }
         }
+        binding.btnEnd.setOnClickListener {
+            sameMethods.endMatch(activity as SubmitTeamsActivity)
+        }
     }
 
 
@@ -124,5 +126,6 @@ class BlueTeamFragment : Fragment() {
             argBundle.putSerializable(Constants.BLUE_TEAM_FRAGMENT, blueTeam as ArrayList<Player>)
             this.arguments = argBundle
         }
+        lateinit var checkListOfPlayers: MutableList<PlayerCheck>
     }
 }

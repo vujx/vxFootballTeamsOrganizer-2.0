@@ -1,8 +1,7 @@
 package com.algebra.soccernewtry.runningGame.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.annotation.Nullable
+import androidx.room.*
 
 @Entity(tableName = "runningGame")
 data class History(
@@ -10,9 +9,11 @@ data class History(
     val id: Int,
 
     @ColumnInfo(name = "goalgetterId")
+    @Nullable
     val goalgetterId: Int,
 
     @ColumnInfo(name = "assisterId")
+    @Nullable
     val assisterId: Int,
 
     @ColumnInfo(name = "teamId")
@@ -25,5 +26,5 @@ data class History(
     val goalRed: Int,
 
     @ColumnInfo(name = "goalBlue")
-    val goalBlue: Int
+    val goalBlue: Int,
 )

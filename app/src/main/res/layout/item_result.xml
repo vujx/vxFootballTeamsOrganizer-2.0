@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    android:background="@color/white"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvDraws"
+            android:layout_width="wrap_content"
+            android:layout_height="0.1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="draw"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/tvDisplayLose"
+            android:layout_width="wrap_content"
+            android:layout_height="0.1dp"
+            android:text="@string/loses"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@id/tvDraws"
+            android:layout_marginEnd="36dp"/>
+
+        <TextView
+            android:id="@+id/tvDisplayWins"
+            android:layout_width="wrap_content"
+            android:layout_height="0.1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/wins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            app:layout_constraintEnd_toStartOf="@id/tvDisplayLose"
+            android:layout_marginEnd="36dp"/>
+
+        <TextView
+            android:id="@+id/tvPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:padding="16dp"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ispis" />
+
+        <TextView
+            android:id="@+id/tvDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvDraws"
+            app:layout_constraintStart_toStartOf="@id/tvDraws"
+            app:layout_constraintEnd_toEndOf="@id/tvDraws"/>
+
+        <TextView
+            android:id="@+id/tvAverageDraw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="33.33%"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvDraw"
+            app:layout_constraintTop_toBottomOf="@id/tvDraw"
+            app:layout_constraintEnd_toEndOf="@id/tvDraw"/>
+
+        <TextView
+            android:id="@+id/tvLoses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvDisplayLose"
+            app:layout_constraintStart_toStartOf="@id/tvDisplayLose"
+            app:layout_constraintEnd_toEndOf="@id/tvDisplayLose"/>
+
+        <TextView
+            android:id="@+id/tvAverageLoses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="33.33%"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvLoses"
+            app:layout_constraintTop_toBottomOf="@id/tvLoses"
+            app:layout_constraintEnd_toEndOf="@id/tvLoses"/>
+
+        <TextView
+            android:id="@+id/tvWins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/tvDisplayWins"
+            app:layout_constraintStart_toStartOf="@id/tvDisplayWins"
+            app:layout_constraintEnd_toEndOf="@id/tvDisplayWins"/>
+
+
+        <TextView
+            android:id="@+id/tvAveriageWins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="33.33%"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvWins"
+            app:layout_constraintStart_toStartOf="@id/tvWins"
+            app:layout_constraintEnd_toEndOf="@id/tvWins"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.fuca.team.random.FixPlayers
 import com.algebra.soccernewtry.constants.Constants
@@ -14,6 +17,7 @@ import com.algebra.soccernewtry.dialog.DialogForSubmitTeams
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
+import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.player.model.Player
 
 class GeneratedRandomTeamsActivity : AppCompatActivity() {
@@ -29,26 +33,31 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
     private val adapterBlue = RandomBlueTeamAdapter()
     private val scroll = ScrollSynchronizer()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityGeneratedRandomTeamsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
         setupToolbarAndNavigationDrawer()
         setUpRecyclerView()
-        selectedPlayers.addAll(intent.getSerializableExtra(Constants.GET_LIST_OF_PLAYERS) as List<Player>)
-        randomTeams = RandomMakeTeam(selectedPlayers)
-        mainListAndTeams = ManipulateMainListAndTeams(selectedPlayers)
 
         scroll.add(binding.recyclerViewForRedTeams)
         scroll.add(binding.recyclerViewForBlueTeams)
 
+        selectedPlayers.addAll(intent.getSerializableExtra(Constants.GET_LIST_OF_PLAYERS) as List<Player>)
+        randomTeams = RandomMakeTeam(selectedPlayers)
+        mainListAndTeams = ManipulateMainListAndTeams(selectedPlayers)
+
+
+        Log.d("Ispis", selectedPlayers.size.toString())
         randomTeams.makeTeams()
         getTeams()
         clickListeners()
         replacePlayers()
         fixRow()
-        Log.d("Ispis", selectedPlayers.toString())
+        Log.d("Ispis", selectedPlayers.size.toString())
     }
 
     private fun setUpRecyclerView() {
@@ -80,9 +89,14 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
                 override fun checkPlayers(check: Boolean) {
                     if(check){
                         val intent = Intent(this@GeneratedRandomTeamsActivity, SubmitTeamsActivity::class.java)
-                        intent.putExtra("", blueTeam as ArrayList<Player>)
-                        intent.putExtra("", redTeam as ArrayList<Player>)
+                        intent.putExtra(Constants.RED_TEAM, blueTeam.filter {
+                            it.name.isNotEmpty()
+                        } as ArrayList<Player>)
+                        intent.putExtra(Constants.BLUE_TEAM, redTeam.filter {
+                            it.name.isNotEmpty()
+                        } as ArrayList<Player>)
                         startActivity(intent)
+
                     }
                 }
             }
@@ -134,7 +148,7 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
     }
 
     private fun displayScoreAfterAddingLastPlayerIfOddNumOfPlayers(){
-        randomTeams = RandomMakeTeam(selectedPlayers)
+        //randomTeams = RandomMakeTeam(selectedPlayers)
         if(!randomTeams.checkIfItIsOddNum) RandomMakeTeam.lastPlayer =
             Player(-1, "", 0, 0, 0, 0, 0, 0, 0)
         randomTeams.addLastPlayerIfOddNumOfPlayers(randomTeams.checkIfItIsOddNum)
@@ -159,9 +173,12 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
         if(randomTeams.sumaCrvenih > randomTeams.sumaPlavih){
             val result = ((randomTeams.sumaPlavih/randomTeams.sumaCrvenih)*100).toString().substring(0,2)
             binding.scorePlayer1.text = "Match balance $result%"
+            Log.d("IspisiRez", result)
         } else if(randomTeams.sumaCrvenih < randomTeams.sumaPlavih){
             val result = ((randomTeams.sumaCrvenih/randomTeams.sumaPlavih)*100).toString().substring(0,2)
             binding.scorePlayer1.text = "Match balance $result%"
+            Log.d("IspisiRez", result)
+
         } else {
             binding.scorePlayer1.text = "Match balance 100%"
         }

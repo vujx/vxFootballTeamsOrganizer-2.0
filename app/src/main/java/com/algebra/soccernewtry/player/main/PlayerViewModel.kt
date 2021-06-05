@@ -22,4 +22,12 @@ class PlayerViewModel @Inject constructor(private val allPlayersRepo: PlayerRepo
     fun deletePlayer(id: Int){
         allPlayersRepo.deletePlayerRepo(id)
     }
+
+    suspend fun getAllPlayersForStat() = allPlayersRepo.getAllPlayers()
+
+    suspend fun getAllPlayersSpecification(id: Int) = allPlayersRepo.getAllPlayersStatRepo(id)
+
+    suspend fun getNumberOfGoals(id: Int) = allPlayersRepo.getNumberOfGolasRepo(id)
+
+    suspend fun getNumberOfAssist(id: Int) = allPlayersRepo.getNumberOfAssistRepo(id)
 }

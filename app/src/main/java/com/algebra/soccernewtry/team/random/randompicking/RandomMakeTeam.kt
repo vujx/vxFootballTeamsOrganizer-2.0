@@ -98,12 +98,23 @@ class RandomMakeTeam(private val selectedPlayer: MutableList<Player>) {
         if (checkIfItIsOddNum) {
             selectedPlayer.add(lastPlayer)
             when{
-                sumaCrvenih > sumaPlavih -> GeneratedRandomTeamsActivity.blueTeam.add(lastPlayer)
-                sumaPlavih > sumaCrvenih -> GeneratedRandomTeamsActivity.redTeam.add(lastPlayer)
+                sumaCrvenih > sumaPlavih -> {
+                    GeneratedRandomTeamsActivity.blueTeam.add(lastPlayer)
+                    GeneratedRandomTeamsActivity.redTeam.add(Player(-1, "", 0, 0, 0, 0, 0, 0, 0))
+                }
+                sumaPlavih > sumaCrvenih -> {
+                    GeneratedRandomTeamsActivity.redTeam.add(lastPlayer)
+                    GeneratedRandomTeamsActivity.blueTeam.add(Player(-1, "", 0, 0, 0, 0, 0, 0, 0))
+                }
                 else -> {
                     when ((0..1).random()) {
-                        0 -> GeneratedRandomTeamsActivity.redTeam.add(lastPlayer)
-                        1 -> GeneratedRandomTeamsActivity.blueTeam.add(lastPlayer)
+                        0 ->{
+                            GeneratedRandomTeamsActivity.redTeam.add(lastPlayer)
+                              GeneratedRandomTeamsActivity.blueTeam.add(Player(-1, "", 0, 0, 0, 0, 0, 0, 0))}
+                        1 -> {
+                            GeneratedRandomTeamsActivity.redTeam.add(Player(-1, "", 0, 0, 0, 0, 0, 0, 0))
+                            GeneratedRandomTeamsActivity.blueTeam.add(lastPlayer)
+                        }
                     }
                 }
             }

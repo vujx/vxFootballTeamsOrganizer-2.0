@@ -1,18 +1,23 @@
-package com.algebra.soccernewtry.game.teams.red.blue
+package com.algebra.soccernewtry.game.teams.blue
 
 import androidx.fragment.app.FragmentActivity
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.game.history.History
-import com.algebra.soccernewtry.game.teams.red.red.RedTeamFragment
+import com.algebra.soccernewtry.game.teams.red.RedTeamFragment
 
 class BlueTeamAction {
 
     fun actionAfterClickOnGoalButton(requireActivity: FragmentActivity, playerNameAssist: String, playerNameGoalGeter: String){
         RedTeamFragment.goalBlue++
         addToDatabaseGoalgetterAndAssisst(requireActivity)
-
+        var assiterId = 0
+        var goalgetterId = 0
+        BlueTeamFragment.checkListOfPlayers.forEach {
+            if(it.name.toLowerCase() == playerNameAssist.toLowerCase()) assiterId = it.id
+            if(it.name.toLowerCase() == playerNameGoalGeter.toLowerCase()) goalgetterId = it.id
+        }
         val history = History(RedTeamFragment.goalRed, RedTeamFragment.goalBlue, playerNameAssist, playerNameGoalGeter,
-            false, RedTeamFragment.idForHistory)
+            false, RedTeamFragment.idForHistory,"",goalgetterId, assiterId)
         SubmitTeamsActivity.adapterHistory.addResult(history)
         //databaseMethodsHistory.addHistoryToDatabase(history, requireActivity)
 
@@ -36,8 +41,12 @@ class BlueTeamAction {
         addGoalgetterToDatabase(requireActivity)
         RedTeamFragment.goalBlue++
 
+        var goalgetterId = 0
+        BlueTeamFragment.checkListOfPlayers.forEach {
+            if(it.name.toLowerCase() == playerNameGoalGeter.toLowerCase()) goalgetterId = it.id
+        }
         val history = History(RedTeamFragment.goalRed, RedTeamFragment.goalBlue, "", playerNameGoalGeter,
-            false, RedTeamFragment.idForHistory)
+            false, RedTeamFragment.idForHistory, "",goalgetterId, -1)
         SubmitTeamsActivity.adapterHistory.addResult(history)
         //databaseMethodsHistory.addHistoryToDatabase(history, requireActivity)
 
@@ -56,9 +65,12 @@ class BlueTeamAction {
     fun actionAfterAutogoal(requireActivity: FragmentActivity, playerNameAutoGoal: String){
         addAutogoalToDatabase(requireActivity)
         RedTeamFragment.goalRed++
-
+        var goalgetterId = 0
+        BlueTeamFragment.checkListOfPlayers.forEach {
+            if(it.name.toLowerCase() == playerNameAutoGoal.toLowerCase()) goalgetterId = it.id
+        }
         val history = History(RedTeamFragment.goalRed, RedTeamFragment.goalBlue, "", "", true,
-            RedTeamFragment.idForHistory, playerNameAutoGoal)
+            RedTeamFragment.idForHistory, playerNameAutoGoal, goalgetterId, -1)
         SubmitTeamsActivity.adapterHistory.addResult(history)
         //databaseMethodsHistory.addHistoryToDatabase(history, requireActivity)
 

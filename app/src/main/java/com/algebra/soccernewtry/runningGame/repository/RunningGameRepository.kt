@@ -1,12 +1,12 @@
 package com.algebra.soccernewtry.runningGame.repository
 
 import com.algebra.soccernewtry.di.DatabaseIoExecutor
-import com.algebra.soccernewtry.runningGame.database.AppDatabaseRunningGame
+import com.algebra.soccernewtry.player.database.AppDatabaseAllPlayers
 import com.algebra.soccernewtry.runningGame.model.History
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
-class RunningGameRepository @Inject constructor(private val database: AppDatabaseRunningGame,
+class RunningGameRepository @Inject constructor(private val database: AppDatabaseAllPlayers,
                                 @DatabaseIoExecutor private val databaseExecutor: Executor){
 
     private val runningGameDao = database.runningGameDao()
@@ -29,5 +29,9 @@ class RunningGameRepository @Inject constructor(private val database: AppDatabas
         }
     }
 
+    fun getAllHistoryById() = runningGameDao.getAllHistorybyId()
+
     fun getAllHistory() = runningGameDao.getAllHistory()
+
+    suspend fun getAllHistoryRepoCourtine() = runningGameDao.getAllHistoryByCorutine()
 }

@@ -30,7 +30,6 @@ class ChooseYourOwnActivity : AppCompatActivity() {
     private val adapter = TeamsAdapter()
     val blueTeam = mutableListOf<Player>()
     val redTeam = mutableListOf<Player>()
-    var playerName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityChooseYourOwnBinding.inflate(layoutInflater)
@@ -50,35 +49,25 @@ class ChooseYourOwnActivity : AppCompatActivity() {
         adapter.listenerForChoosenTeam = object: TeamsAdapter.ListenerForCheckBox{
             override fun chooseRedTeam(IsCheck: Boolean, player: Player) {
                 if(IsCheck){
-                    playerName = player.name
                     player.teamId = 1
-                    player.isPlaying = 1
-                    redTeam.add(player)
                     viewModel.addPlayer(player)
                 } else {
-                    if(playerName != player.name){
+                    if(player.teamId == 1){
                         player.teamId = 0
-                        player.isPlaying = 0
-                        redTeam.remove(player)
                         viewModel.addPlayer(player)
-                    } else playerName = ""
+                    }
                 }
             }
 
             override fun chooseBlueTeam(IsCheck: Boolean, player: Player) {
                 if(IsCheck) {
-                    playerName = player.name
                     player.teamId = 2
-                    player.isPlaying = 1
                     viewModel.addPlayer(player)
-                    blueTeam.add(player)
                 } else {
-                    if(playerName != player.name){
+                    if(player.teamId == 2){
                         player.teamId = 0
-                        player.isPlaying = 0
                         viewModel.addPlayer(player)
-                        blueTeam.remove(player)
-                    } else playerName = ""
+                    }
                 }
             }
         }
@@ -86,17 +75,29 @@ class ChooseYourOwnActivity : AppCompatActivity() {
 
     private fun bind() {
         viewModel.getAllPlayers().observe(this, Observer {
-            if (it.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
+            val listWithoutDeletedPlayers = it.filter {
+                it.isDeleted == 0
+            }
+            if (listWithoutDeletedPlayers.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
             else binding.tvDisplay.text = ""
             adapter.setList(it.filter {
                 it.isDeleted == 0
             })
+            redTeam.clear()
+            blueTeam.clear()
             var countPlayerRed = 0
             var countPlayerBlue = 0
             it.forEach {
-                if (it.teamId == 1 && it.isDeleted != 1) countPlayerRed++
-                else if(it.teamId == 2 && it.isDeleted != 1) countPlayerBlue++
+                if (it.teamId == 1 && it.isDeleted != 1) {
+                    countPlayerRed++
+                    redTeam.add(it)
+                }
+                else if(it.teamId == 2 && it.isDeleted != 1){
+                    countPlayerBlue++
+                    blueTeam.add(it)
+                }
             }
+
             binding.tvRedTeamsPlayers.text = "Red team players $countPlayerRed"
             binding.tvBlueTeamsPlayers.text = "Blue team players $countPlayerBlue"
             binding.progressBar.visibility = View.GONE

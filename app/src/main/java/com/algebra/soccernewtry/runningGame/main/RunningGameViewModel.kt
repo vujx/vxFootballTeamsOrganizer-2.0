@@ -22,4 +22,8 @@ class RunningGameViewModel @Inject constructor(private val runningGameRepo: Runn
     fun deleteHistory(id: Int){
         runningGameRepo.deleteHistory(id)
     }
+
+    fun getAllHistoryById() = runningGameRepo.getAllHistoryById()
+
+    suspend fun getAllHistoryCourutine() = runningGameRepo.getAllHistoryRepoCourtine()
 }

@@ -4,8 +4,15 @@ import android.content.Intent
 import android.view.View
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.algebra.soccernewtry.CreateTeamsActivity
 import com.algebra.soccernewtry.R
+import com.algebra.soccernewtry.additional.actions.MoreActionsActivity
+import com.algebra.soccernewtry.bonus.BonusPointsActivity
+import com.algebra.soccernewtry.dialog.DialogCheck
+import com.algebra.soccernewtry.display.achievement.ResultActivity
+import com.algebra.soccernewtry.display.efficiency.EfficiencyActivity
+import com.algebra.soccernewtry.display.realisation.RealisationActivity
 import com.algebra.soccernewtry.player.main.PlayerActivity
 
 class NavDrawerList(private val activity: AppCompatActivity) {
@@ -70,9 +77,6 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     val intent = Intent(activity, PlayerActivity::class.java)
                     activity.startActivity(intent)
                 }
-            }
-            false
-            /*
                 "Efficiency" -> {
                     val intent = Intent(activity, EfficiencyActivity::class.java)
                     activity.startActivity(intent)
@@ -85,10 +89,6 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     val intent = Intent(activity, ResultActivity::class.java)
                     activity.startActivity(intent)
                 }
-                "History" -> {
-                    val intent = Intent(activity, HistoryOfGameActivity::class.java)
-                    activity.startActivity(intent)
-                }
                 "Bonus Points" -> {
                     val intent = Intent(activity, BonusPointsActivity::class.java)
                     activity.startActivity(intent)
@@ -97,6 +97,25 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     val intent = Intent(activity, MoreActionsActivity::class.java)
                     activity.startActivity(intent)
                 }
+                "Exit" -> {
+                    val dialog = createDialog("Are you sure you want to exit?", "Logout")
+                    dialog.listener = object: DialogCheck.Listener{
+                        override fun getPress(isPress: Boolean) {
+                            ActivityCompat.finishAffinity(activity)
+                        }
+                    }
+                }
+            }
+            false
+
+
+            /*    "History" -> {
+                    val intent = Intent(activity, HistoryOfGameActivity::class.java)
+                    activity.startActivity(intent)
+                }*/
+
+            /*
+
                 "Restart Showcase" -> {
                     Constants.SHOWCASE_ID_MOREACTIONS += "J"
                     Constants.SHOWCASE_ID_CODE += "J"
@@ -110,23 +129,14 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     val intent = Intent(activity, activity.javaClass)
                     activity.startActivity(intent)
                 }
-                "Exit" -> {
-                    val dialog = createDialog("Are you sure you want to exit?", "Logout")
-                    dialog.listener = object: DialogCheckGoal.ListenerForDialog{
-                        override fun okPress(isPress: Boolean) {
-                            ActivityCompat.finishAffinity(activity)
-                        }
-                    }
-                }
             }
-            false
+            false*/
         }
     }
 
-    private fun createDialog(title: String, tag: String): DialogCheckGoal {
-        val dialog = DialogCheckGoal(title)
+    private fun createDialog(title: String, tag: String): DialogCheck {
+        val dialog = DialogCheck(title)
         dialog.show(activity.supportFragmentManager, tag)
         return dialog
-    }*/
-            }
-}}
+    }
+}

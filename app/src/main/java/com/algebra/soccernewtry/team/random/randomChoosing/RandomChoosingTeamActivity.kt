@@ -57,7 +57,10 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
 
     private fun bind(){
         viewModel.getAllPlayers().observe(this, Observer {
-            if(it.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
+            val listWithoutDeletedPlayers = it.filter {
+                it.isDeleted == 0
+            }
+            if (listWithoutDeletedPlayers.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
             else binding.tvDisplay.text = ""
             adapter.setList(it.filter {
                 it.isDeleted == 0

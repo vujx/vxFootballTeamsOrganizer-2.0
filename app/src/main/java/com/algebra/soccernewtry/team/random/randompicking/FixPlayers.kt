@@ -92,6 +92,8 @@ class FixPlayers {
     }
 
     private fun addFixPlayersAfterSortingList(newFixList: List<Any>){
+        Log.d("IspisMainFix", newFixList.toString())
+        Log.d("ispisSizeRed", GeneratedRandomTeamsActivity.redTeam.size.toString())
         for(counter: Int in newFixList.indices){
             if(counter % 3 == 0){
                 GeneratedRandomTeamsActivity.redTeam.add(newFixList[counter + 1] as Int, newFixList[counter] as Player)

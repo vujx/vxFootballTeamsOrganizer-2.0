@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.algebra.soccernewtry">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -10,7 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Soccer">
-        <activity android:name=".SplashActivity"
+        <activity android:name=".additional.actions.MoreActionsActivity"></activity>
+        <activity android:name=".bonus.BonusPointsActivity" />
+        <activity android:name=".display.realisation.RealisationActivity" />
+        <activity android:name=".display.efficiency.EfficiencyActivity" />
+        <activity android:name=".display.achievement.ResultActivity" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,24 +29,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".game.SubmitTeamsActivity"
-            android:theme="@style/Theme.Soccer">
-
-        </activity>
-        <activity android:name=".team.random.own.ChooseYourOwnActivity"
-            android:theme="@style/Theme.Soccer"/>
-        <activity android:name=".team.random.randompicking.GeneratedRandomTeamsActivity"
-            android:theme="@style/Theme.Soccer"/>
-        <activity android:name=".team.random.randomChoosing.RandomChoosingTeamActivity"
-            android:theme="@style/Theme.Soccer"/>
-        <activity android:name=".display.InformationActivity"
-            android:theme="@style/Theme.Soccer"/>
-        <activity android:name=".player.main.PlayerActivity"
-            android:theme="@style/Theme.Soccer"/>
-        <activity android:name=".CreateTeamsActivity"
-            android:theme="@style/Theme.Soccer">
-
-        </activity>
+        <activity
+            android:name=".game.SubmitTeamsActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".team.random.own.ChooseYourOwnActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".team.random.randompicking.GeneratedRandomTeamsActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".team.random.randomChoosing.RandomChoosingTeamActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".display.InformationActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".player.main.PlayerActivity"
+            android:theme="@style/Theme.Soccer" />
+        <activity
+            android:name=".CreateTeamsActivity"
+            android:theme="@style/Theme.Soccer" />
     </application>
 
 </manifest>

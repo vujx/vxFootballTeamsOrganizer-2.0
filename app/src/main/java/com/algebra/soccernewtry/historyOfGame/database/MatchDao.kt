@@ -18,4 +18,7 @@ interface MatchDao {
 
     @Query("SELECT * FROM matches")
     fun getAllMatched(): LiveData<List<Match>>
+
+    @Query("SELECT * FROM matches")
+    suspend fun getAllMatchesCourtine(): List<Match>
 }
