@@ -41,11 +41,11 @@ class EndOperation(private val viewModelPlayers: PlayerViewModel, private val vi
         }
 
         RedTeamFragment.checkListOfPlayers.forEach {
-            viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 , matchId, it.id))
+            viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 , matchId, it.id, it.teamId))
         }
 
         BlueTeamFragment.checkListOfPlayers.forEach {
-            viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id))
+            viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id, it.teamId))
         }
 
     }

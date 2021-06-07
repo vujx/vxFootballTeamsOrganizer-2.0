@@ -14,4 +14,10 @@ class MatchPlayerViewModel @Inject constructor(private val matchPlayerRepository
     fun addMatchPlayer(matchPlayer: MatchPlayer){
         matchPlayerRepository.addMatchPlayer(matchPlayer)
     }
+
+    fun deleteAllMatchPlayers() {
+        matchPlayerRepository.deleteAllPlayersFromMatch()
+    }
+
+    suspend fun getAll() = matchPlayerRepository.getAll()
 }

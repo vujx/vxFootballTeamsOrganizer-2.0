@@ -89,10 +89,16 @@ class GeneratedRandomTeamsActivity : AppCompatActivity() {
                 override fun checkPlayers(check: Boolean) {
                     if(check){
                         val intent = Intent(this@GeneratedRandomTeamsActivity, SubmitTeamsActivity::class.java)
-                        intent.putExtra(Constants.RED_TEAM, blueTeam.filter {
+                        redTeam.forEach {
+                            it.teamId = 1
+                        }
+                        blueTeam.forEach {
+                            it.teamId = 2
+                        }
+                        intent.putExtra(Constants.RED_TEAM, redTeam.filter {
                             it.name.isNotEmpty()
                         } as ArrayList<Player>)
-                        intent.putExtra(Constants.BLUE_TEAM, redTeam.filter {
+                        intent.putExtra(Constants.BLUE_TEAM, blueTeam.filter {
                             it.name.isNotEmpty()
                         } as ArrayList<Player>)
                         startActivity(intent)

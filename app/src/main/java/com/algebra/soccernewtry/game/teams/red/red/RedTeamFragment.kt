@@ -46,7 +46,7 @@ class RedTeamFragment : Fragment() {
         if(counter == 0){
             checkListOfPlayers = mutableListOf()
             redTeamList.forEach {
-                checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
+                checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false, 1))
             }
             adapter.setList(checkListOfPlayers)
         }
@@ -116,7 +116,7 @@ class RedTeamFragment : Fragment() {
         checkAutoGoal = false
         checkListOfPlayers = mutableListOf()
         redTeamList.forEach {
-            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
+            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false, 1))
         }
         adapter.setList(checkListOfPlayers)
         (activity as SubmitTeamsActivity).setScore()

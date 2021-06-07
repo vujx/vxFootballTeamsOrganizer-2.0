@@ -88,7 +88,7 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
         }
 
         binding.btnRandomPicker.setOnClickListener  {
-            if(adapter.getListOfPlayers().size > 2){
+            if(adapter.getListOfPlayers().size >= 2){
                 val intent = Intent(this, GeneratedRandomTeamsActivity::class.java)
                 val selectedPlayers = adapter.getListOfPlayers().filter {
                     it.isPlaying == 1

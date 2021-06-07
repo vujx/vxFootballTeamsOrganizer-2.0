@@ -49,7 +49,7 @@ class BlueTeamFragment : Fragment() {
 
         checkListOfPlayers = mutableListOf()
         blueTeamList.forEach {
-            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
+            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false, 2))
         }
         adapter.setList(checkListOfPlayers)
 
@@ -91,7 +91,7 @@ class BlueTeamFragment : Fragment() {
         checkAutoGoal = false
         checkListOfPlayers = mutableListOf()
         blueTeamList.forEach {
-            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false))
+            checkListOfPlayers.add(PlayerCheck(it.id, it.name, false, false, false, 2))
         }
         (activity as SubmitTeamsActivity).setScoreRed()
         adapter.setList(checkListOfPlayers)

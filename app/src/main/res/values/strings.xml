@@ -36,4 +36,14 @@
     <string name="wins">wins</string>
     <string name="loses">loses</string>
     <string name="draws">Draws</string>
+    <string name="export_to_csv_file">export to csv file</string>
+    <string name="reset_all">reset all</string>
+    <string name="refresh_all">refresh all</string>
+    <string name="share_database">share database</string>
+    <string name="actions">actions</string>
+    <string name="codes">codes</string>
+    <string name="enter_code">Enter code</string>
+    <string name="enter_code_to_get_shared_database">Enter code to get shared database</string>
+    <string name="download_database">download database</string>
+    <string name="copy">Copy</string>
 </resources>

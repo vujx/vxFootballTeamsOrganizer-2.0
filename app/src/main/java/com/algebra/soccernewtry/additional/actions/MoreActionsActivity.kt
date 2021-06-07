@@ -12,7 +12,9 @@ import com.algebra.soccernewtry.databinding.ActivityMoreActionsBinding
 import com.algebra.soccernewtry.exitApp
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoreActionsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMoreActionsBinding

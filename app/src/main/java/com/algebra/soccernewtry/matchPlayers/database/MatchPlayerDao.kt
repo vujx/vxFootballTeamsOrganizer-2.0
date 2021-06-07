@@ -15,4 +15,11 @@ interface MatchPlayerDao {
 
     @Query("SELECT * FROM MatchPlayer")
     fun getAllMatchPlayers(): LiveData<List<MatchPlayer>>
+
+    @Query("DELETE FROM MatchPlayer")
+    fun deleteAllMatchPlayers()
+
+    @Query("SELECT * FROM MatchPlayer")
+    suspend fun getAll(): List<MatchPlayer>
+
 }

@@ -16,6 +16,9 @@ interface MatchDao {
     @Query("DELETE FROM matches WHERE :id = id")
     fun deleteMatch(id: Int)
 
+    @Query("DELETE FROM matches")
+    fun deleteAllMatches()
+
     @Query("SELECT * FROM matches")
     fun getAllMatched(): LiveData<List<Match>>
 

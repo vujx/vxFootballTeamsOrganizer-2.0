@@ -14,4 +14,10 @@ class MatchFlowViewModel @Inject constructor(private val matchFlowRepository: Ma
     fun addMatchFlow(matchFlow: MatchFlow){
         matchFlowRepository.addMatchFlowRepo(matchFlow)
     }
+
+    fun deleteAll(){
+        matchFlowRepository.deleteAllRepo()
+    }
+
+    suspend fun getAll() = matchFlowRepository.getAllMatchFlowCourtine()
 }

@@ -16,5 +16,9 @@ interface MatchFlowDao {
     @Query("SELECT * FROM MatchFlow")
     fun getAllMatchFlowRepo(): LiveData<List<MatchFlow>>
 
+    @Query("DELETE FROM MatchFlow")
+    fun deleteAll()
 
+    @Query("SELECT * FROM MatchFlow")
+    suspend fun getAllMatchFlow(): List<MatchFlow>
 }

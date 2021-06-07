@@ -18,5 +18,12 @@ class MatchFlowRepository @Inject constructor(private val databaseAllPlayers: Ap
         }
     }
 
+    fun deleteAllRepo(){
+        databaseExecutor.execute {
+            matchFlowDao.deleteAll()
+        }
+    }
     fun getAllMatchFlowRepo() = matchFlowDao.getAllMatchFlowRepo()
+
+    suspend fun getAllMatchFlowCourtine() = matchFlowDao.getAllMatchFlow()
 }

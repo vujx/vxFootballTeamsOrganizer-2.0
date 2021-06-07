@@ -37,9 +37,25 @@ class PlayerRepository @Inject constructor(private val databaseAllPlayers: AppDa
         }
     }
 
+    fun deleteAllTable(){
+        databaseExecutor.execute {
+            playerDao.deleteAll()
+        }
+    }
+
     suspend fun getAllPlayersStatRepo(id: Int) = playerDao.getAllPlayerStat(id)
 
     suspend fun getNumberOfGolasRepo(id: Int) = playerDao.getNumberOfGoals(id)
 
     suspend fun getNumberOfAssistRepo(id: Int) = playerDao.getNumberOfAssist(id)
+
+    suspend fun getNumberOfAutogoals(id: Int) = playerDao.getNumberOfAutogoal(id)
+
+    suspend fun getResultOfMatch(id: Int) = playerDao.getMatchResult(id)
+
+    suspend fun getResultOfMatchBlueTeam(id: Int) = playerDao.getMatchResultBlue(id)
+
+    suspend fun getTeamIdPlayer(matchId: Int, playerId: Int) = playerDao.getPlayerTeamId(matchId, playerId)
+
+    suspend fun getPlayersMatchesRepo(id: Int) = playerDao.getPlayersMatches(id)
 }

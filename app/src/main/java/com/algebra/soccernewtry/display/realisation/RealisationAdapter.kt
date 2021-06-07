@@ -16,7 +16,6 @@ class RealisationAdapter: RecyclerView.Adapter<RealisationAdapter.RealisationVie
         listOfRealisation.clear()
         listOfRealisation.addAll(list)
         listOfRealisation.sortBy { it.name }
-        Log.d("ListaImena", listOfRealisation.toString())
         listOfRealisation.sortWith(compareByDescending<PlayerStat> {
             it.numberOfGoal
         }.thenBy { it.attendance })

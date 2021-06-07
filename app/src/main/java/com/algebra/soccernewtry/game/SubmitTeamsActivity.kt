@@ -182,30 +182,27 @@ class SubmitTeamsActivity : AppCompatActivity() {
                     0,0, it.bonusPoints, it.isDeleted))
             }
         }
-        var matchId: Int = -1
+
         lifecycleScope.launchWhenResumed {
             val list = viewModelMatch.getAllMatchesCourtine()
-            matchId = list[list.size - 1].id
+            val matchId = list[list.size - 1].id
+            adapterHistory.listOfResults.forEach {
+                Log.d("HIsto", it.toString())
+                val isAutoGoal = if(it.autoGoal.isNullOrEmpty()) 0 else 1
+                val teamId = if(it.isRed) 1 else 2
+                val matchFlow = MatchFlow(0, matchId, it.goalGeterId, it.assisterId, teamId, isAutoGoal)
+                viewModelMatchFlow.addMatchFlow(matchFlow)
+
+                RedTeamFragment.checkListOfPlayers.forEach {
+                    val matchPlayer = MatchPlayer(0 , matchId, it.id, 1)
+                    viewModelMatchPlayer.addMatchPlayer(matchPlayer)
+                }
+
+                BlueTeamFragment.checkListOfPlayers.forEach {
+                    viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id, 2))
+                }
+            }
         }
-
-
-        SubmitTeamsActivity.adapterHistory.listOfResults.forEach {
-            val isAutoGoal = if(it.autoGoal.isNullOrEmpty()) 0 else 1
-            val teamId = if(it.isRed) 1
-            else 2
-            val matchFlow = MatchFlow(0, matchId, it.goalGeterId, it.assisterId, teamId, isAutoGoal)
-            viewModelMatchFlow.addMatchFlow(matchFlow)
-        }
-
-        RedTeamFragment.checkListOfPlayers.forEach {
-            val matchPlayer = MatchPlayer(0 , matchId, it.id)
-            viewModelMatchPlayer.addMatchPlayer(matchPlayer)
-        }
-
-        BlueTeamFragment.checkListOfPlayers.forEach {
-            viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id))
-        }
-
     }
     private fun getTodayDate(): String{
         val today = Calendar.getInstance()

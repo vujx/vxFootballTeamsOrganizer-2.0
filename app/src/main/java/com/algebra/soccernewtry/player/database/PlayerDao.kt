@@ -2,6 +2,8 @@ package com.algebra.soccernewtry.player.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.algebra.soccernewtry.matchPlayers.model.MatchPlayer
+import com.algebra.soccernewtry.player.model.MatchsResult
 import com.algebra.soccernewtry.player.model.Player
 import com.algebra.soccernewtry.player.model.PlayerSpecification
 
@@ -13,6 +15,9 @@ interface PlayerDao {
 
     @Query("DELETE FROM AllPlayers WHERE id = :id")
     fun deletePlayer(id: Int)
+
+    @Query("DELETE FROM AllPlayers")
+    fun deleteAll()
 
     @Query("SELECT * FROM AllPlayers")
     fun getAllPlayers(): LiveData<List<Player>>
@@ -28,9 +33,27 @@ interface PlayerDao {
             "WHERE ap.id = :id")
     suspend fun getAllPlayerStat(id: Int): PlayerSpecification
 
-    @Query("SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :id")
+    @Query("SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :id AND isAutoGoal = 0")
     suspend fun getNumberOfGoals(id: Int): Int
 
     @Query("SELECT COUNT(*) FROM MatchFlow WHERE assisterId = :id")
     suspend fun getNumberOfAssist(id: Int): Int
+
+    @Query("SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :id AND isAutoGoal = 1")
+    suspend fun getNumberOfAutogoal(id: Int): Int
+
+
+    @Query("SELECT * FROM MatchPlayer WHERE playerId = :id")
+    suspend fun getPlayersMatches(id: Int): List<MatchPlayer>
+
+    @Query("SELECT matchId, COUNT(*) AS teamGoals, teamId FROM MatchFlow\n" +
+            "WHERE teamId = 1 AND matchId = :matchId")
+    suspend fun getMatchResult(matchId: Int): List<MatchsResult>
+
+    @Query("SELECT matchId, COUNT(*) AS teamGoals, teamId FROM MatchFlow\n" +
+            "WHERE teamId = 2 AND matchId = :matchId")
+    suspend fun getMatchResultBlue(matchId: Int): List<MatchsResult>
+
+    @Query("SELECT teamId FROM MatchPlayer WHERE playerId = :idPlayer AND matchId = :matchId")
+    suspend fun getPlayerTeamId(matchId: Int, idPlayer: Int): Int
 }

@@ -14,5 +14,8 @@ data class MatchPlayer(
     val matchId: Int,
 
     @ColumnInfo(name = "playerId")
-    val playerId: Int
+    val playerId: Int,
+
+    @ColumnInfo(name = "teamId")
+    val teamId: Int
 )

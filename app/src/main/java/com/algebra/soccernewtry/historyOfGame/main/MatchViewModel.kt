@@ -16,4 +16,8 @@ class MatchViewModel @Inject constructor(private val matchRepository: MatchRepos
     }
 
     suspend fun getAllMatchesCourtine() = matchRepository.getAllMatches()
+
+    fun deleteAllMatches(){
+        matchRepository.deleteAllMatches()
+    }
 }

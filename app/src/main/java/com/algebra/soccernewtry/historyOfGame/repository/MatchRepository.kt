@@ -20,5 +20,11 @@ class MatchRepository @Inject constructor(private val database: AppDatabaseAllPl
 
     fun getAllMatchesRepo() = historyMatchDao.getAllMatched()
 
+    fun deleteAllMatches(){
+        databaseExecutor.execute {
+            historyMatchDao.deleteAllMatches()
+        }
+    }
+
     suspend fun getAllMatches() = historyMatchDao.getAllMatchesCourtine()
 }
