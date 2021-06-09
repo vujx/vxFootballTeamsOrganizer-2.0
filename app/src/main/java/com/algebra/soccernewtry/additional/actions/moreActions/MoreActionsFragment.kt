@@ -26,6 +26,7 @@ import com.algebra.soccernewtry.matchPlayers.main.MatchPlayerViewModel
 import com.algebra.soccernewtry.networking.main.ServiceViewModel
 import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.player.model.Player
+import com.algebra.soccernewtry.player.repository.PlayerRepository
 import com.algebra.soccernewtry.shareCode.main.ShareCodeViewModel
 import com.algebra.soccernewtry.shareCode.model.ShareCode
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,7 @@ class MoreActionsFragment : Fragment() {
     private val viewModelMatches: MatchViewModel by viewModels()
     private val viewModelService: ServiceViewModel by viewModels()
     private val viewModelCode: ShareCodeViewModel by viewModels()
+
     private lateinit var insertValues: InsertValues
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,19 +62,16 @@ class MoreActionsFragment : Fragment() {
 
     private fun clickListener(){
         binding.btnShareDatabase.setOnClickListener {
-            Log.d("Jel doded", "assda")
             val dialog = createDialog("Are you sure you want to share database?", "Refresh")
             dialog.listener = object: DialogCheck.Listener{
                 override fun getPress(isPress: Boolean) {
                     if(isPress){
                         insertValues = InsertValues(viewModelPlayer, viewModelMatchFlow, viewModelMatches, viewModelMatchPlayer)
                         lifecycleScope.launchWhenResumed {
-                            Log.d("ispis", insertValues.getAllValues())
                             viewModelService.getCode(insertValues.getAllValues())
                             viewModelService.getCode.observe(requireActivity(), Observer {
                                 displayMessage(requireActivity() as AppCompatActivity, "You got your code!")
                                 viewModelCode.addCode(ShareCode(0, it))
-                                Log.d("ispisi", it)
                             })
                             viewModelService.errorObserver.observe(requireActivity(), Observer {
                                 onFailureShareCode()

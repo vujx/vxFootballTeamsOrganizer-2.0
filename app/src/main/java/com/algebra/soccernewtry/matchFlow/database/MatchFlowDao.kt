@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.model.PlayerMatchScore
 import com.algebra.soccernewtry.matchFlow.model.MatchFlow
 
 @Dao
@@ -21,4 +22,20 @@ interface MatchFlowDao {
 
     @Query("SELECT * FROM MatchFlow")
     suspend fun getAllMatchFlow(): List<MatchFlow>
+
+    @Query("SELECT ap.name,\n" +
+            "(SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :playerId AND isAutogoal = 0 AND matchId = :matchId) AS goals,\n" +
+            "(SELECT COUNT(*) FROM MatchFlow WHERE assisterId = :playerId AND isAutogoal = 0 AND matchId = :matchId) AS assists,\n" +
+            "(SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :playerId AND isAutogoal = 1 AND matchId = :matchId) AS owngoals\n" +
+            "FROM AllPlayers ap WHERE ap.id = :playerId")
+    suspend fun getResultForCurrentPlayer(playerId: Int, matchId: Int): PlayerMatchScore
+
+    @Query("SELECT playerId FROM MatchPlayer WHERE matchId = :matchId AND teamId = 1")
+    suspend fun getRedTeamsPlayers(matchId: Int): List<Int>
+
+    @Query("SELECT playerId FROM MatchPlayer WHERE matchId = :matchId AND teamId = 2")
+    suspend fun getBlueTeamsPlayers(matchId: Int): List<Int>
+
+    @Query("SELECT * FROM MatchFlow mf WHERE matchId = :matchId ORDER BY id ASC")
+    suspend fun getAllMatchFlowByMacthId(matchId: Int): List<MatchFlow>
 }

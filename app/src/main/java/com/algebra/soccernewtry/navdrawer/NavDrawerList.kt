@@ -12,6 +12,7 @@ import com.algebra.soccernewtry.bonus.BonusPointsActivity
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.display.achievement.ResultActivity
 import com.algebra.soccernewtry.display.efficiency.EfficiencyActivity
+import com.algebra.soccernewtry.display.historyOfMatch.HistoryMatchActivity
 import com.algebra.soccernewtry.display.realisation.RealisationActivity
 import com.algebra.soccernewtry.player.main.PlayerActivity
 
@@ -89,6 +90,10 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     val intent = Intent(activity, ResultActivity::class.java)
                     activity.startActivity(intent)
                 }
+                "History" -> {
+                    val intent = Intent(activity, HistoryMatchActivity::class.java)
+                    activity.startActivity(intent)
+                }
                 "Bonus Points" -> {
                     val intent = Intent(activity, BonusPointsActivity::class.java)
                     activity.startActivity(intent)
@@ -109,10 +114,7 @@ class NavDrawerList(private val activity: AppCompatActivity) {
             false
 
 
-            /*    "History" -> {
-                    val intent = Intent(activity, HistoryOfGameActivity::class.java)
-                    activity.startActivity(intent)
-                }*/
+            /*    */
 
             /*
 

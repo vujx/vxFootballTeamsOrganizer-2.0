@@ -5,20 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.soccernewtry.databinding.FragmentHistoryBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.game.history.edit.EditHistory
 import com.algebra.soccernewtry.game.teams.red.RedTeamFragment
-
+import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 class HistoryFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private lateinit var editHistory: EditHistory
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

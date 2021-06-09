@@ -3,6 +3,7 @@ package com.algebra.soccernewtry.di
 import android.content.Context
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.networking.SocialNetworkService
+import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +42,7 @@ object ApiServiceModule {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
-            //  .addInterceptor(ChuckInterceptor(context))
+             .addInterceptor(ChuckInterceptor(context))
             .addInterceptor(logging)
             .build()
     }

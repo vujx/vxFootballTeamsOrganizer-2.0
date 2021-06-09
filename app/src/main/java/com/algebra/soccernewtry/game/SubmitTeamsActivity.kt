@@ -192,15 +192,15 @@ class SubmitTeamsActivity : AppCompatActivity() {
                 val teamId = if(it.isRed) 1 else 2
                 val matchFlow = MatchFlow(0, matchId, it.goalGeterId, it.assisterId, teamId, isAutoGoal)
                 viewModelMatchFlow.addMatchFlow(matchFlow)
+            }
 
-                RedTeamFragment.checkListOfPlayers.forEach {
-                    val matchPlayer = MatchPlayer(0 , matchId, it.id, 1)
-                    viewModelMatchPlayer.addMatchPlayer(matchPlayer)
-                }
+            RedTeamFragment.checkListOfPlayers.forEach {
+                val matchPlayer = MatchPlayer(0 , matchId, it.id, 1)
+                viewModelMatchPlayer.addMatchPlayer(matchPlayer)
+            }
 
-                BlueTeamFragment.checkListOfPlayers.forEach {
-                    viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id, 2))
-                }
+            BlueTeamFragment.checkListOfPlayers.forEach {
+                viewModelMatchPlayer.addMatchPlayer(MatchPlayer(0 ,matchId, it.id, 2))
             }
         }
     }

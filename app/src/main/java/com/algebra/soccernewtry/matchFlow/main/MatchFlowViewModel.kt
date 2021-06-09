@@ -20,4 +20,12 @@ class MatchFlowViewModel @Inject constructor(private val matchFlowRepository: Ma
     }
 
     suspend fun getAll() = matchFlowRepository.getAllMatchFlowCourtine()
+
+    suspend fun getMatchScore(playerId: Int, matchId: Int) = matchFlowRepository.getMatchScoreResult(playerId, matchId)
+
+    suspend fun getRedTeam(matchId: Int) = matchFlowRepository.getRedTeamsPlayersRepo(matchId)
+
+    suspend fun getBlueTeam(matchId: Int) = matchFlowRepository.getBlueTeamsPlayersRepo(matchId)
+
+    suspend fun getAllMatchFlowByMatchId(matchId: Int) = matchFlowRepository.getAllMatchFlow(matchId)
 }

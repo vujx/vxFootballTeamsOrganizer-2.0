@@ -26,4 +26,12 @@ class MatchFlowRepository @Inject constructor(private val databaseAllPlayers: Ap
     fun getAllMatchFlowRepo() = matchFlowDao.getAllMatchFlowRepo()
 
     suspend fun getAllMatchFlowCourtine() = matchFlowDao.getAllMatchFlow()
+
+    suspend fun getMatchScoreResult(playerId: Int, matchId: Int) = matchFlowDao.getResultForCurrentPlayer(playerId, matchId)
+
+    suspend fun getRedTeamsPlayersRepo(matchId: Int) = matchFlowDao.getRedTeamsPlayers(matchId)
+
+    suspend fun getBlueTeamsPlayersRepo(matchId: Int) = matchFlowDao.getBlueTeamsPlayers(matchId)
+
+    suspend fun getAllMatchFlow(matchId: Int) = matchFlowDao.getAllMatchFlowByMacthId(matchId)
 }

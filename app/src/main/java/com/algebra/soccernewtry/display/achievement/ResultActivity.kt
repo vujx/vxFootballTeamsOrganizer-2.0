@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,7 @@ import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import com.algebra.soccernewtry.player.main.PlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notifyAll
 
 @AndroidEntryPoint
 class ResultActivity : AppCompatActivity() {
@@ -27,9 +29,6 @@ class ResultActivity : AppCompatActivity() {
     private val navDrawerListExpandable = NavDrawerList(this)
     private val adapterResult = ResultAdaper()
     private val viewModelPlayer: PlayerViewModel by viewModels()
-    private val viewModelMatches: MatchViewModel by viewModels()
-    private val viewModelMatchFlow: MatchFlowViewModel by viewModels()
-    private val viewModelMatchPlayers: MatchPlayerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityResultBinding.inflate(layoutInflater)
@@ -38,19 +37,6 @@ class ResultActivity : AppCompatActivity() {
 
         setupToolbarAndNavigationDrawer()
         setUpRecyclerView()
-        lifecycleScope.launchWhenResumed {
-            val listOfMatchFlow = viewModelMatchFlow.getAll()
-            Log.d("ListaMatchFlow", listOfMatchFlow.toString())
-            val listOfMatchPLayers = viewModelMatchPlayers.getAllMatchPlayer().observe(
-                this@ResultActivity, Observer {
-                    Log.d("ListaMatchPlayer", it.toString())
-                }
-            )
-            val allMatch = viewModelMatches.getAllMatchesCourtine()
-            Log.d("ispisiAllMatch", allMatch.toString())
-        }
-
-
         bind()
     }
 
@@ -61,34 +47,41 @@ class ResultActivity : AppCompatActivity() {
     private fun bind(){
         val listForStatRealisation = mutableListOf<PlayerStat>()
         this.lifecycleScope.launchWhenResumed {
-            val getAllMatches = viewModelMatches.getAllMatchesCourtine()
             val allPlayers = viewModelPlayer.getAllPlayersForStat()
             allPlayers.filter {
                 it.isDeleted == 0
-            }.forEach {
-                val playerSpec = viewModelPlayer.getAllPlayersSpecification(it.id)
+            }.forEach {player ->
+                val playerSpec = viewModelPlayer.getAllPlayersSpecification(player.id)
                 var wins = 0
                 var loses = 0
                 var draw = 0
-                viewModelPlayer.getPlayersMatches(it.id).forEach {
-                    val getMatchResultRed = viewModelPlayer.getMatchResult(it.id)
-                    Log.d("ispisMatchRes", getMatchResultRed.toString())
-                    val getMatchResultBlue = viewModelPlayer.getResultBlueTeam(it.id)
-                    Log.d("ispisMatchBlue", getMatchResultBlue.toString())
-                }
+                viewModelPlayer.getPlayersMatches(player.id).forEach {
+                    val getMatchResultRed = viewModelPlayer.getMatchResult(it.matchId)
+                    val getMatchResultBlue = viewModelPlayer.getResultBlueTeam(it.matchId)
 
-               // val getTeamId = viewModelPlayer.getTeamIdPLayer(getMatchResultRed.matchId, it.id)
-               // Log.d("ispisiTeamId", getTeamId.toString())
+                    if(getMatchResultRed.teamGoals > getMatchResultBlue.teamGoals && it.teamId == 1) wins++
+                    if(getMatchResultRed.teamGoals == getMatchResultBlue.teamGoals) draw++
+                    if(getMatchResultRed.teamGoals < getMatchResultBlue.teamGoals && it.teamId == 1) loses++
+
+                    if(getMatchResultRed.teamGoals < getMatchResultBlue.teamGoals && it.teamId == 2) wins++
+                    if(getMatchResultRed.teamGoals > getMatchResultBlue.teamGoals && it.teamId == 2) loses++
+                }
+                listForStatRealisation.add(PlayerStat(player.id, player.name, wins, loses, draw, 0, 0, 0, playerSpec.attendance, 0))
             }
 
-         /*   val numOfAssist = viewModelPlayer.getNumberOfAssist(1)
-            val numOfGoals = viewModelPlayer.getNumberOfGoals(1)
-            Log.d("IspisnumGoals", numOfGoals.toString())
-            Log.d("ispisAssist", numOfAssist.toString())
-            val numOfAutogoal = viewModelPlayer.getNumberOfAutogoals(1)
-
-            Log.d("ispisAutogoal", numOfAutogoal.toString())
-            Log.d("ispisMatchResult", getMatchResult.toString())*/
+            allPlayers.filter{
+                it.isDeleted == 0
+            }.forEach {player ->
+                var checkName = false
+                listForStatRealisation.forEach {
+                    if(player.name == it.name)
+                        checkName = true
+                }
+                if(!checkName) listForStatRealisation.add(PlayerStat(player.id, player.name, 0, 0, 0, 0,0 ,0 , 0, 0))
+            }
+            if(listForStatRealisation.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
+            adapterResult.setList(listForStatRealisation)
+            binding.progressBar.visibility = View.GONE
         }
     }
 

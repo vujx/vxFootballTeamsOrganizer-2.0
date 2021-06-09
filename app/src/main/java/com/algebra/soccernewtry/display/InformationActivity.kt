@@ -13,7 +13,9 @@ import com.algebra.soccernewtry.display.information.FragmentName
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import com.algebra.soccernewtry.player.model.Player
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InformationActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityInformationBinding

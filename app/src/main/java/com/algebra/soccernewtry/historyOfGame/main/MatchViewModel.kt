@@ -20,4 +20,8 @@ class MatchViewModel @Inject constructor(private val matchRepository: MatchRepos
     fun deleteAllMatches(){
         matchRepository.deleteAllMatches()
     }
+
+    fun getMatchesResults() = matchRepository.getMatchesResults()
+
+  //  fun insertValue(value: String) = matchRepository.insertNewValueMatches(value)
 }

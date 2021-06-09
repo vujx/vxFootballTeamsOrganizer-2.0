@@ -1,5 +1,6 @@
 package com.algebra.soccernewtry.networking.repository
 
+import android.util.Log
 import com.algebra.soccernewtry.di.DatabaseIoExecutor
 import com.algebra.soccernewtry.networking.SocialNetworkService
 import com.algebra.soccernewtry.networking.model.ModelJson
@@ -31,11 +32,14 @@ class ServiceRepository @Inject constructor(private val socialNetworkService: So
     fun deleteCode(code: String, listener: Listener){
         socialNetworkService.deleteCode("7h15157h3b3770k3n3v3rf0r3v3r", code).enqueue(object: retrofit2.Callback<Void>{
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("nijedobro", t.message.toString())
+
                 t.message?.let { listener.onFailure(it) }
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                response.body()?.let { listener.onSuccess("") }
+                Log.d("jeldobro", response.isSuccessful.toString())
+                 listener.onSuccess("codara")
             }
         })
     }

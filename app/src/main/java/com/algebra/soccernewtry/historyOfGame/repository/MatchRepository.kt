@@ -1,5 +1,7 @@
 package com.algebra.soccernewtry.historyOfGame.repository
 
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.algebra.soccernewtry.di.DatabaseIoExecutor
 import com.algebra.soccernewtry.historyOfGame.model.Match
 import com.algebra.soccernewtry.player.database.AppDatabaseAllPlayers
@@ -26,5 +28,11 @@ class MatchRepository @Inject constructor(private val database: AppDatabaseAllPl
         }
     }
 
+    fun getMatchesResults() = historyMatchDao.getAllMatchResults()
+
     suspend fun getAllMatches() = historyMatchDao.getAllMatchesCourtine()
+
+    /*fun insertNewValueMatches(value: String) {
+        historyMatchDao.getAll(SimpleSQLiteQuery(value))
+    }*/
 }

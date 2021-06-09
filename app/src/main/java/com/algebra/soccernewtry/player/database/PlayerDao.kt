@@ -2,6 +2,7 @@ package com.algebra.soccernewtry.player.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.algebra.soccernewtry.additional.actions.codeDisplay.CodeFragment
 import com.algebra.soccernewtry.matchPlayers.model.MatchPlayer
 import com.algebra.soccernewtry.player.model.MatchsResult
 import com.algebra.soccernewtry.player.model.Player
@@ -48,12 +49,13 @@ interface PlayerDao {
 
     @Query("SELECT matchId, COUNT(*) AS teamGoals, teamId FROM MatchFlow\n" +
             "WHERE teamId = 1 AND matchId = :matchId")
-    suspend fun getMatchResult(matchId: Int): List<MatchsResult>
+    suspend fun getMatchResult(matchId: Int): MatchsResult
 
     @Query("SELECT matchId, COUNT(*) AS teamGoals, teamId FROM MatchFlow\n" +
             "WHERE teamId = 2 AND matchId = :matchId")
-    suspend fun getMatchResultBlue(matchId: Int): List<MatchsResult>
+    suspend fun getMatchResultBlue(matchId: Int): MatchsResult
 
     @Query("SELECT teamId FROM MatchPlayer WHERE playerId = :idPlayer AND matchId = :matchId")
     suspend fun getPlayerTeamId(matchId: Int, idPlayer: Int): Int
+
 }

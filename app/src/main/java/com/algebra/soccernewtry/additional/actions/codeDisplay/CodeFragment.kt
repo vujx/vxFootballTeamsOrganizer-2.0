@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,11 @@ import com.algebra.soccernewtry.additional.actions.verifyAvailableNetwork
 import com.algebra.soccernewtry.databinding.FragmentCodeBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.displayMessage
+import com.algebra.soccernewtry.historyOfGame.main.MatchViewModel
+import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
+import com.algebra.soccernewtry.matchPlayers.main.MatchPlayerViewModel
 import com.algebra.soccernewtry.networking.main.ServiceViewModel
+import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.shareCode.main.ShareCodeViewModel
 import com.algebra.soccernewtry.shareCode.model.ShareCode
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +36,10 @@ class CodeFragment : Fragment() {
     private val adapter = CodeAdapter()
     private val viewModelCode: ShareCodeViewModel by viewModels()
     private val viewModelService: ServiceViewModel by viewModels()
+    private val viewModelPlayer: PlayerViewModel by viewModels()
+    private val viewModelMatchPlayer: MatchPlayerViewModel by viewModels()
+    private val viewModelMatchFlow: MatchFlowViewModel by viewModels()
+    private val viewModelMatches: MatchViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -44,10 +53,9 @@ class CodeFragment : Fragment() {
         super.onResume()
         viewModelCode.getAllShareCode().observe(requireActivity(), Observer {
             if(it.isEmpty()) binding.tvDisplay.text = "You don't have any code generated!"
-            else{
-                binding.tvDisplay.text = ""
-                adapter.setList(it)
-            }
+            else binding.tvDisplay.text = ""
+
+            adapter.setList(it)
             binding.progressBar.visibility = View.GONE
         })
     }
@@ -64,16 +72,20 @@ class CodeFragment : Fragment() {
             override fun deleteCode(shareCode: ShareCode) {
                 val dialog = DialogCheck("Are you sure you want to delete ${shareCode.code} code from database?")
                 dialog.show(requireActivity().supportFragmentManager, "Deletecode")
+                Log.d("ispis", shareCode.toString())
                 dialog.listener = object: DialogCheck.Listener{
                     override fun getPress(isPress: Boolean) {
-                        viewModelService.deleteCode(shareCode.code)
-                        viewModelService.deleteCode.observe(requireActivity(), Observer {
-                            adapter.removeCode(shareCode)
-                            viewModelCode.deleteCode(shareCode.id)
-                        })
-                        viewModelService.errorObserver.observe(requireActivity(), Observer {
-                            onFailureShareCode()
-                        })
+                        if(isPress){
+                            viewModelService.deleteCode(shareCode.code)
+                            viewModelService.deleteCode.observe(requireActivity(), Observer {
+                                Log.d("isp", it.toString())
+                                Log.d("ispisshareCode", shareCode.toString())
+                                viewModelCode.deleteCode(shareCode.id)
+                            })
+                            viewModelService.errorObserver.observe(requireActivity(), Observer {
+                                onFailureShareCode()
+                            })
+                        }
                     }
                 }
             }
@@ -95,11 +107,54 @@ class CodeFragment : Fragment() {
 
     private fun clickListener(){
         binding.btnGenerateCode.setOnClickListener {
-            viewModelService.getValueToGenerateDatabase(binding.etEnterCode.text.toString())
-            viewModelService.getValue.observe(requireActivity(), Observer {
-                Log.d("SDasdsd", it)
-            })
+            if(binding.etEnterCode.text.toString().length != 8)
+                binding.etEnterCode.error = "You have to entered 8 characters!"
+            else {
+                viewModelService.getValueToGenerateDatabase(binding.etEnterCode.text.toString())
+                viewModelService.getValue.observe(requireActivity(), Observer {
+
+                    deleteAllFromTables()
+
+                    val indexOfPlayer = it.indexOf(';')
+                    val queryPlayer = it.substring(0, indexOfPlayer + 1)
+                    val queryCheck = queryPlayer.substring(indexOfPlayer - 2, indexOfPlayer - 1)
+
+                    if(queryCheck != "S")
+                        //izvrsi query queryPlayer
+                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+
+                    val indexOfMatchFlow = it.indexOf(';', indexOfPlayer + 1)
+                    val queryMatchFlow = it.substring(indexOfPlayer + 1, indexOfMatchFlow + 1)
+                    val checkQuery = queryMatchFlow.substring(queryMatchFlow.length - 3, queryMatchFlow.length - 2)
+
+                    if(checkQuery != "S")
+                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+
+                    val indexOfMatches = it.indexOf(";", indexOfMatchFlow + 1)
+                    val queryMatches = it.substring(indexOfMatchFlow + 1, indexOfMatches + 1)
+                    val checkQueryMatches = queryMatches.substring(queryMatches.length - 3, queryMatches.length - 2)
+
+                    if(checkQueryMatches != "S")
+                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+
+                    val indexOfMatchPlayer = it.indexOf(";", indexOfMatches + 1)
+                    val queryMatchPlayers = it.substring(indexOfMatches + 1, indexOfMatchPlayer + 1)
+                    val checkQueryMatchPlayers = queryMatchPlayers.substring(queryMatchPlayers.length - 3, queryMatchPlayers.length - 2)
+
+                    if(checkQueryMatchPlayers != "S")
+                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+
+                    displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+                })
+            }
         }
+    }
+
+    private fun deleteAllFromTables(){
+        viewModelMatchFlow.deleteAll()
+        viewModelMatchPlayer.deleteAllMatchPlayers()
+        viewModelPlayer.deleteAll()
+        viewModelMatches.deleteAllMatches()
     }
 
     companion object {
