@@ -1,5 +1,6 @@
 package com.algebra.soccernewtry.historyOfGame.repository
 
+import android.util.Log
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.algebra.soccernewtry.di.DatabaseIoExecutor
@@ -32,7 +33,22 @@ class MatchRepository @Inject constructor(private val database: AppDatabaseAllPl
 
     suspend fun getAllMatches() = historyMatchDao.getAllMatchesCourtine()
 
-    /*fun insertNewValueMatches(value: String) {
-        historyMatchDao.getAll(SimpleSQLiteQuery(value))
-    }*/
+    fun deleteMatch(id: Int){
+        databaseExecutor.execute {
+            historyMatchDao.deleteMatch(id)
+        }
+    }
+
+    fun deleteMatchFlowOfMatch(id: Int){
+        databaseExecutor.execute {
+            historyMatchDao.deleteMatchFlowMatch(id)
+        }
+    }
+
+    fun insertNewValueMatches(value: String) {
+        Log.d("ispisRepoPlayers", value)
+        val newQuery = """$value""".trimMargin()
+        val queryWithReplace = newQuery.replace('\n', ' ')
+        database.openHelper.writableDatabase.execSQL(queryWithReplace)
+    }
 }

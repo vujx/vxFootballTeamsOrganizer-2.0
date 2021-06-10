@@ -119,31 +119,32 @@ class CodeFragment : Fragment() {
                     val queryPlayer = it.substring(0, indexOfPlayer + 1)
                     val queryCheck = queryPlayer.substring(indexOfPlayer - 2, indexOfPlayer - 1)
 
-                    if(queryCheck != "S")
-                        //izvrsi query queryPlayer
-                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+                    if(queryCheck != "S"){
+                        viewModelMatches.insertValue(queryPlayer)
+                        Log.d("ispisqueryPlayer", queryPlayer)
+                    }
 
                     val indexOfMatchFlow = it.indexOf(';', indexOfPlayer + 1)
                     val queryMatchFlow = it.substring(indexOfPlayer + 1, indexOfMatchFlow + 1)
                     val checkQuery = queryMatchFlow.substring(queryMatchFlow.length - 3, queryMatchFlow.length - 2)
 
                     if(checkQuery != "S")
-                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+                        viewModelMatches.insertValue(queryMatchFlow)
 
                     val indexOfMatches = it.indexOf(";", indexOfMatchFlow + 1)
                     val queryMatches = it.substring(indexOfMatchFlow + 1, indexOfMatches + 1)
                     val checkQueryMatches = queryMatches.substring(queryMatches.length - 3, queryMatches.length - 2)
 
                     if(checkQueryMatches != "S")
-                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+                        viewModelMatches.insertValue(queryMatches)
 
                     val indexOfMatchPlayer = it.indexOf(";", indexOfMatches + 1)
                     val queryMatchPlayers = it.substring(indexOfMatches + 1, indexOfMatchPlayer + 1)
                     val checkQueryMatchPlayers = queryMatchPlayers.substring(queryMatchPlayers.length - 3, queryMatchPlayers.length - 2)
 
                     if(checkQueryMatchPlayers != "S")
-                        displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
-
+                        viewModelMatches.insertValue(queryMatchPlayers)
+                    binding.etEnterCode.setText("")
                     displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
                 })
             }

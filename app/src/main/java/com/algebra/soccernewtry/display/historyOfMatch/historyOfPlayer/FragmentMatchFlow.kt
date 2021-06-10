@@ -1,6 +1,7 @@
 package com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer
 
 import android.os.Bundle
+import android.service.autofill.FieldClassification
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.algebra.soccernewtry.R
-import com.algebra.soccernewtry.databinding.FragmentBlueTeamHistoryOfPlayerBinding
 import com.algebra.soccernewtry.databinding.FragmentMatchFlowBinding
+import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.editHistory.EditHistoryMatchFlow
+import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.model.PlayerMatchScore
 import com.algebra.soccernewtry.game.history.History
 import com.algebra.soccernewtry.game.history.HistoryAdapter
-import com.algebra.soccernewtry.game.history.edit.EditHistory
 import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
+import com.algebra.soccernewtry.matchFlow.model.MatchFlow
 import com.algebra.soccernewtry.player.main.PlayerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +33,7 @@ class FragmentMatchFlow : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMatchFlowBinding.inflate(inflater, container, false)
-        editHistory = EditHistoryMatchFlow(requireActivity())
+        editHistory = EditHistoryMatchFlow(requireActivity(), viewModel)
         setUpRecyclerView()
         return binding.root
     }
@@ -97,7 +98,43 @@ class FragmentMatchFlow : Fragment() {
             }
 
             override fun deleteHistory(item: History, position: Int) {
-                TODO("Not yet implemented")
+                val dialog = DialogCheck("Are you sure you want to delete goal?")
+                dialog.show(requireActivity().supportFragmentManager, "Exit")
+                dialog.listener = object: DialogCheck.Listener{
+                    override fun getPress(isPress: Boolean) {
+                        if(isPress){
+                           adapterHistory.removeResult(item, position)
+                            viewModel.deleteMatchFlow(item.id)
+                            if(item.isRed){
+                                if(item.goalRed != 0){
+                                    item.goalRed--
+                                    for(counter: Int in position until adapterHistory.listOfResults.size){
+                                        adapterHistory.listOfResults[counter].goalRed--
+                                        val teamId = if(adapterHistory.listOfResults[counter].isRed) 1 else 2
+                                        val isAutogoal = if(adapterHistory.listOfResults[counter].autoGoal.isNullOrEmpty()) 0 else 1
+                                        viewModel.addMatchFlow(MatchFlow(adapterHistory.listOfResults[counter].id,
+                                        PlayerHistoryActivity.matchId, adapterHistory.listOfResults[counter].goalGeterId, adapterHistory.listOfResults[counter].assisterId,
+                                                    teamId, isAutogoal))
+                                    }
+                                }
+                            }
+                            else {
+                                if(item.goalBlue != 0){
+                                    item.goalBlue--
+                                    for(counter: Int in position until adapterHistory.listOfResults.size){
+                                        adapterHistory.listOfResults[counter].goalBlue--
+                                        val teamId = if(adapterHistory.listOfResults[counter].isRed) 1 else 2
+                                        val isAutogoal = if(adapterHistory.listOfResults[counter].autoGoal.isNullOrEmpty()) 0 else 1
+                                        viewModel.addMatchFlow(MatchFlow(adapterHistory.listOfResults[counter].id,
+                                            PlayerHistoryActivity.matchId, adapterHistory.listOfResults[counter].goalGeterId, adapterHistory.listOfResults[counter].assisterId,
+                                            teamId, isAutogoal))
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
             }
 
         }

@@ -43,8 +43,13 @@ class FragmentRedTeamHistoryOfPlayers : Fragment() {
                 }
                 adapterTeam.setList(listOfRedTeamMatchScore)
                 binding.progressBar.visibility = View.GONE
+
+
                 listOfRedTeamMatchScore.forEach {
                     listOfPlayersRed.add(PlayerCheck(0, it.name, false, false, false, 1))
+                }
+                for(i: Int in redTeam.indices){
+                    listOfPlayersRed[i].id = redTeam[i]
                 }
             }
         } else {
@@ -63,5 +68,6 @@ class FragmentRedTeamHistoryOfPlayers : Fragment() {
         fun newInstance() = FragmentRedTeamHistoryOfPlayers()
         val listOfRedTeamMatchScore = mutableListOf<PlayerMatchScore>()
         val listOfPlayersRed = mutableListOf<PlayerCheck>()
+        val adapterTeam = HistoryPlayerAdapter()
     }
 }

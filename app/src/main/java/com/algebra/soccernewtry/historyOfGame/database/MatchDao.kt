@@ -20,6 +20,9 @@ interface MatchDao {
     @Query("DELETE FROM matches")
     fun deleteAllMatches()
 
+    @Query("DELETE FROM MatchFlow WHERE matchId = :matchId")
+    fun deleteMatchFlowMatch(matchId: Int)
+
     @Query("SELECT * FROM matches")
     fun getAllMatched(): LiveData<List<Match>>
 
@@ -33,8 +36,4 @@ interface MatchDao {
             "m.name AS date\n" +
             "FROM matches m")
     fun getAllMatchResults(): LiveData<List<HistoryOfGame>>
-
-    /*@RawQuery()
-    fun getAll(myquery: SupportSQLiteQuery)*/
-
 }

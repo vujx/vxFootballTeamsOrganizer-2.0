@@ -2,18 +2,24 @@ package com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.editHist
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.algebra.fuca.game.teams.SubmitTeamsAdapter
 import com.algebra.soccernewtry.R
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.FragmentBlueTeamHistoryOfPlayer
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.FragmentMatchFlow
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.FragmentRedTeamHistoryOfPlayers
+import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.PlayerHistoryActivity
+import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.model.PlayerMatchScore
 import com.algebra.soccernewtry.game.PlayerCheck
 import com.algebra.soccernewtry.game.history.History
 import com.algebra.soccernewtry.game.history.HistoryAdapter
+import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
+import com.algebra.soccernewtry.matchFlow.model.MatchFlow
 
-class EditDialogMatchFlow(private val history: History): DialogFragment() {
+class EditDialogMatchFlow(private val history: History,private val viewModel: MatchFlowViewModel): DialogFragment() {
 
     private val adapter = SubmitTeamsAdapter()
     private val adapterBlue = SubmitTeamsAdapter()
@@ -178,10 +184,14 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                 if (it.name.toLowerCase() == newGoalGeter.toLowerCase()) goalgetterId = it.id
                 if (it.name.toLowerCase() == newAssist.toLowerCase()) assisterId = it.id
             }
-        if (!check) FragmentMatchFlow.adapterHistory.editResult(
-            History(history.goalRed, history.goalBlue, newAssist, newGoalGeter,
-                history.isRed, history.id, "", goalgetterId, assisterId)
-        )
+        if (!check){
+            FragmentMatchFlow.adapterHistory.editResult(
+                History(history.goalRed, history.goalBlue, newAssist, newGoalGeter,
+                    history.isRed, history.id, "", goalgetterId, assisterId)
+            )
+            val teamId = if(history.isRed) 1 else 2
+            viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, assisterId, teamId, 0))
+        }
         else {
             if (history.isRed) {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
@@ -193,6 +203,7 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, newAssist, newGoalGeter,
                         !history.isRed, history.id, "", goalgetterId, assisterId)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, assisterId, 2, 0))
             } else {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
                     if (FragmentMatchFlow.adapterHistory.listOfResults[i].goalBlue != 0)
@@ -203,11 +214,32 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, newAssist, newGoalGeter,
                         !history.isRed, history.id, "", goalgetterId, assisterId)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, assisterId, 1, 0))
             }
         }
 
         clearAddToDatabaseAndSetup()
+        setNewList()
         alertDialog.dismiss()
+    }
+
+    private fun setNewList(){
+        requireActivity().lifecycleScope.launchWhenResumed {
+            val redTeam = viewModel.getRedTeam(PlayerHistoryActivity.matchId)
+            FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore.clear()
+            redTeam.forEach {
+                FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore.add(viewModel.getMatchScore(it, PlayerHistoryActivity.matchId))
+            }
+            FragmentRedTeamHistoryOfPlayers.adapterTeam.setList(FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore)
+
+            val blueTeam = viewModel.getBlueTeam(PlayerHistoryActivity.matchId)
+            val listOfBlueTeamMatchScore = mutableListOf<PlayerMatchScore>()
+            blueTeam.forEach {
+                listOfBlueTeamMatchScore.add(viewModel.getMatchScore(it, PlayerHistoryActivity.matchId))
+            }
+            Log.d("IspisiBlueTeam", listOfBlueTeamMatchScore.toString())
+            FragmentBlueTeamHistoryOfPlayer.adapterTeam.setList(listOfBlueTeamMatchScore)
+        }
     }
 
     private fun checkGoalgeter(alertDialog: AlertDialog) {
@@ -225,10 +257,14 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
             if (it.name.toLowerCase() == newGoalGeter.toLowerCase()) goalgetterId = it.id
         }
 
-        if (!check) FragmentMatchFlow.adapterHistory.editResult(
-            History(history.goalRed, history.goalBlue, "", newGoalGeter,
-                history.isRed, history.id, "", goalgetterId, -1)
-        )
+        if (!check){
+            FragmentMatchFlow.adapterHistory.editResult(
+                History(history.goalRed, history.goalBlue, "", newGoalGeter,
+                    history.isRed, history.id, "", goalgetterId, -1)
+            )
+            var teamId = if(history.isRed) 1 else 2
+            viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, teamId, 0))
+        }
         else {
             if (history.isRed) {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
@@ -240,6 +276,7 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, "", newGoalGeter, !history.isRed, history.id, "",
                         goalgetterId, -1)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, 2, 0))
             } else {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
                     if (FragmentMatchFlow.adapterHistory.listOfResults[i].goalBlue != 0)
@@ -250,9 +287,13 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, "", newGoalGeter, !history.isRed, history.id, "",
                         goalgetterId, -1)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, 1, 0))
+
+
             }
         }
         clearAddToDatabaseAndSetup()
+        setNewList()
         alertDialog.dismiss()
     }
 
@@ -271,10 +312,14 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
             if (it.name.toLowerCase() == newAutoGol.toLowerCase()) goalgetterId = it.id
         }
 
-        if (check) FragmentMatchFlow.adapterHistory.editResult(
-            History(history.goalRed, history.goalBlue, "", "",
-                history.isRed, history.id, newAutoGol, goalgetterId, -1)
-        )
+        if (check) {
+            FragmentMatchFlow.adapterHistory.editResult(
+                History(history.goalRed, history.goalBlue, "", "",
+                    history.isRed, history.id, newAutoGol, goalgetterId, -1)
+            )
+            var teamId = if(history.isRed) 1 else 2
+            viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, teamId, 1))
+        }
         else {
             if (history.isRed) {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
@@ -286,6 +331,7 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, "", "", !history.isRed, history.id, newAutoGol,
                         goalgetterId, -1)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, 2, 1))
             } else {
                 for (i: Int in HistoryAdapter.positonOfEdit until FragmentMatchFlow.adapterHistory.listOfResults.size) {
                     if (FragmentMatchFlow.adapterHistory.listOfResults[i].goalBlue != 0)
@@ -296,9 +342,11 @@ class EditDialogMatchFlow(private val history: History): DialogFragment() {
                     History(history.goalRed, history.goalBlue, "", "", !history.isRed, history.id, newAutoGol,
                         goalgetterId, -1)
                 )
+                viewModel.addMatchFlow(MatchFlow(history.id, PlayerHistoryActivity.matchId, goalgetterId, -1, 1, 1))
             }
         }
         clearAddToDatabaseAndSetup()
+        setNewList()
         alertDialog.dismiss()
     }
 

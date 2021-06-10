@@ -4,25 +4,26 @@ import androidx.fragment.app.FragmentActivity
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.FragmentBlueTeamHistoryOfPlayer
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.FragmentRedTeamHistoryOfPlayers
 import com.algebra.soccernewtry.game.history.History
+import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
 
-class EditHistoryMatchFlow(private val requireActivity: FragmentActivity) {
+class EditHistoryMatchFlow(private val requireActivity: FragmentActivity,private val viewModel: MatchFlowViewModel) {
 
     fun editHistory(item: History){
         defaultValue()
         when{
             item.autoGoal?.isNotEmpty()!! -> {
                 getAutogoal(item)
-                val dialog = EditDialogMatchFlow( item)
+                val dialog = EditDialogMatchFlow( item, viewModel)
                 dialog.show(requireActivity.supportFragmentManager, "EDIT HISTORY")
             }
             item.isRed -> {
                 getAssAndGoalgetter(item)
-                val dialog = EditDialogMatchFlow( item)
+                val dialog = EditDialogMatchFlow( item, viewModel)
                 dialog.show(requireActivity.supportFragmentManager, "EDIT HISTORY")
             }
             else -> {
                 getAssAndGoalgetter(item)
-                val dialog = EditDialogMatchFlow( item)
+                val dialog = EditDialogMatchFlow( item, viewModel)
                 dialog.show(requireActivity.supportFragmentManager, "EDIT HISTORY")
             }
         }

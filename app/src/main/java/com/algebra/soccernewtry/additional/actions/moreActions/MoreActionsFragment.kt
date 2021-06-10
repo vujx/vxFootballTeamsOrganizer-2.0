@@ -13,10 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.algebra.soccernewtry.R
-import com.algebra.soccernewtry.additional.actions.InsertValues
-import com.algebra.soccernewtry.additional.actions.MoreActionsActivity
-import com.algebra.soccernewtry.additional.actions.isInternetAvailable
-import com.algebra.soccernewtry.additional.actions.verifyAvailableNetwork
+import com.algebra.soccernewtry.additional.actions.*
 import com.algebra.soccernewtry.databinding.FragmentMoreActionsBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.displayMessage
@@ -36,6 +33,8 @@ class MoreActionsFragment : Fragment() {
 
     private var _binding: FragmentMoreActionsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var csvExport: CSVExport
+
     private val viewModelPlayer: PlayerViewModel by viewModels()
     private val viewModelMatchPlayer: MatchPlayerViewModel by viewModels()
     private val viewModelMatchFlow: MatchFlowViewModel by viewModels()
@@ -117,6 +116,11 @@ class MoreActionsFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        binding.btnCSV.setOnClickListener {
+            csvExport = CSVExport(viewModelPlayer, viewModelMatches,requireActivity() as MoreActionsActivity)
+            csvExport.createCSVValues()
         }
     }
 

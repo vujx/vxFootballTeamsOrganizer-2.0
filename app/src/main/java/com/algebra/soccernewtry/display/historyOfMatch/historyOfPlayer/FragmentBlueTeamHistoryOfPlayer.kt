@@ -22,7 +22,6 @@ class FragmentBlueTeamHistoryOfPlayer : Fragment() {
     private var _binding: FragmentBlueTeamHistoryOfPlayerBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MatchFlowViewModel by viewModels()
-    private val adapterTeam = HistoryPlayerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +50,9 @@ class FragmentBlueTeamHistoryOfPlayer : Fragment() {
             listOfBlueTeamMatchScore.forEach {
                 blueTeamPlayers.add(PlayerCheck(0, it.name, false, false, false, 2))
             }
+            for(i: Int in 0 until blueTeam.size){
+                blueTeamPlayers[i].id  = blueTeam[i]
+            }
         }
     }
 
@@ -58,5 +60,6 @@ class FragmentBlueTeamHistoryOfPlayer : Fragment() {
         @JvmStatic
         fun newInstance() = FragmentBlueTeamHistoryOfPlayer()
         val blueTeamPlayers = mutableListOf<PlayerCheck>()
+        val adapterTeam = HistoryPlayerAdapter()
     }
 }

@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/menuDetailHistory"
-        android:title="@string/edit"/>
+        android:title="Details"/>
 
     <item
         android:id="@+id/menuDeleteHistoryPlayer"

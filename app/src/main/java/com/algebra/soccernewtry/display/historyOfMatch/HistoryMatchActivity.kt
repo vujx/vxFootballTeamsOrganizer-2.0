@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.soccernewtry.databinding.ActivityHistoryMatchBinding
+import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.PlayerHistoryActivity
 import com.algebra.soccernewtry.exitApp
 import com.algebra.soccernewtry.historyOfGame.main.MatchViewModel
@@ -55,9 +56,17 @@ class HistoryMatchActivity : AppCompatActivity() {
             }
 
             override fun deleteMatch(id: Int) {
-                TODO("Not yet implemented")
+                val dialog = DialogCheck("Are you sure you want to delete match?")
+                dialog.show(supportFragmentManager, "DeleteMatch")
+                dialog.listener = object: DialogCheck.Listener{
+                    override fun getPress(isPress: Boolean) {
+                        if(isPress){
+                            viewModelMatch.deleteMatch(id)
+                            viewModelMatch.deleteMatchFlowOfMatch(id)
+                        }
+                    }
+                }
             }
-
         }
     }
 

@@ -23,6 +23,12 @@ class MatchFlowRepository @Inject constructor(private val databaseAllPlayers: Ap
             matchFlowDao.deleteAll()
         }
     }
+
+    fun deleteMatchFLowById(id: Int){
+        databaseExecutor.execute {
+            matchFlowDao.deleteMatchFlow(id)
+        }
+    }
     fun getAllMatchFlowRepo() = matchFlowDao.getAllMatchFlowRepo()
 
     suspend fun getAllMatchFlowCourtine() = matchFlowDao.getAllMatchFlow()

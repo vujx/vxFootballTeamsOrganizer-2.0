@@ -32,7 +32,7 @@ class HistoryOfGameAdapter(private val activity: HistoryMatchActivity): Recycler
                 popMenu.setOnMenuItemClickListener { 
                     when(it.itemId){
                         R.id.menuDetailHistory -> listener?.getDetailsAboutMatch(listOfGames[layoutPosition].id)
-                        R.id.menuDeleteHistoryPlayer -> listener?.getDetailsAboutMatch(listOfGames[layoutPosition].id)
+                        R.id.menuDeleteHistoryPlayer -> listener?.deleteMatch(listOfGames[layoutPosition].id)
                     }
                     return@setOnMenuItemClickListener true
                 }

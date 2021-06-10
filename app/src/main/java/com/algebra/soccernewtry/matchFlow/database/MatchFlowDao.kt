@@ -20,6 +20,9 @@ interface MatchFlowDao {
     @Query("DELETE FROM MatchFlow")
     fun deleteAll()
 
+    @Query("DELETE FROM MatchFlow WHERE id = :id")
+    fun deleteMatchFlow(id: Int)
+
     @Query("SELECT * FROM MatchFlow")
     suspend fun getAllMatchFlow(): List<MatchFlow>
 

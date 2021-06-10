@@ -16,16 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Soccer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".display.historyOfMatch.historyOfPlayer.PlayerHistoryActivity"></activity>
-        <activity android:name=".display.historyOfMatch.HistoryMatchActivity" />
-        <activity android:name=".additional.actions.MoreActionsActivity" />
-        <activity android:name=".bonus.BonusPointsActivity" />
-        <activity android:name=".display.realisation.RealisationActivity" />
-        <activity android:name=".display.efficiency.EfficiencyActivity" />
-        <activity android:name=".display.achievement.ResultActivity" />
+        <activity android:name=".display.historyOfMatch.historyOfPlayer.PlayerHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".display.historyOfMatch.HistoryMatchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".additional.actions.MoreActionsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".bonus.BonusPointsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".display.realisation.RealisationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".display.efficiency.EfficiencyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".display.achievement.ResultActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashScreenTheme">
+            android:theme="@style/SplashScreenTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,25 +42,42 @@
         </activity>
         <activity
             android:name=".game.SubmitTeamsActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".team.random.own.ChooseYourOwnActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".team.random.randompicking.GeneratedRandomTeamsActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".team.random.randomChoosing.RandomChoosingTeamActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".display.InformationActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".player.main.PlayerActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CreateTeamsActivity"
-            android:theme="@style/Theme.Soccer" />
+            android:theme="@style/Theme.Soccer"
+            android:screenOrientation="portrait"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.algebra.soccernewtry.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
+
 
 </manifest>

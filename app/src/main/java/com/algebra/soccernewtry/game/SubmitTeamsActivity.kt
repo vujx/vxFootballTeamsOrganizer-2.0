@@ -86,7 +86,10 @@ class SubmitTeamsActivity : AppCompatActivity() {
 
     private fun bind(){
         viewModel.getStateOfActivity().observe(this, Observer {
-            if(it.isNotEmpty() && it[0].isEndedGame == 0) viewModel.addStateActiity(StateOfActivity(it[0].id, 1))
+            if(it.isNotEmpty() && it[0].isEndedGame == 0) {
+                viewModel.addStateActiity(StateOfActivity(it[0].id, 1))
+                viewModelMatch.insertMatch(Match(0, getTodayDate()))
+            }
         })
 
         val listOfHistory = mutableListOf<com.algebra.soccernewtry.game.history.History>()
@@ -175,7 +178,6 @@ class SubmitTeamsActivity : AppCompatActivity() {
     }
 
     fun endMatchOperation(){
-        viewModelMatch.insertMatch(Match(0, getTodayDate()))
         lifecycleScope.launchWhenResumed {
             viewModelPlayers.getAllPlayersForStat().forEach {
                 if(it.isPlaying == 1 && it.isDeleted != 1) viewModelPlayers.addPlayer(Player(it.id, it.name, it.defense, it.agility, it.technique,

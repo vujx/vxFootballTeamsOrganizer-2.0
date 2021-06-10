@@ -1,6 +1,7 @@
 package com.algebra.soccernewtry.historyOfGame.main
 
 import androidx.lifecycle.ViewModel
+import androidx.room.RoomDatabase
 import com.algebra.soccernewtry.historyOfGame.model.Match
 import com.algebra.soccernewtry.historyOfGame.repository.MatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,5 +24,14 @@ class MatchViewModel @Inject constructor(private val matchRepository: MatchRepos
 
     fun getMatchesResults() = matchRepository.getMatchesResults()
 
-  //  fun insertValue(value: String) = matchRepository.insertNewValueMatches(value)
+    fun deleteMatch(id: Int){
+        matchRepository.deleteMatch(id)
+    }
+
+    fun deleteMatchFlowOfMatch(id: Int){
+        matchRepository.deleteMatchFlowOfMatch(id)
+    }
+    fun insertValue(value: String) {
+        matchRepository.insertNewValueMatches(value)
+    }
 }
