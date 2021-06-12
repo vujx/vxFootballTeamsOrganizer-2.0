@@ -42,7 +42,7 @@ object ApiServiceModule {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
-             .addInterceptor(ChuckInterceptor(context))
+//             .addInterceptor(ChuckInterceptor(context))
             .addInterceptor(logging)
             .build()
     }

@@ -47,7 +47,7 @@ class SubmitTeamsActivity : AppCompatActivity() {
     private val viewModelMatch: MatchViewModel by viewModels()
     private val viewModelMatchPlayer: MatchPlayerViewModel by viewModels()
     private val viewModelMatchFlow: MatchFlowViewModel by viewModels()
-
+    private var counter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySubmitTeamsBinding.inflate(layoutInflater)
@@ -58,6 +58,7 @@ class SubmitTeamsActivity : AppCompatActivity() {
         bind()
         setUpViewPager()
 
+        checkIfUserLeftApp = true
       //  endOper = EndOperation(viewModelPlayers, viewModelMatch, viewModelMatchFlow, viewModelMatchPlayer, this)
     }
 
@@ -88,8 +89,13 @@ class SubmitTeamsActivity : AppCompatActivity() {
         viewModel.getStateOfActivity().observe(this, Observer {
             if(it.isNotEmpty() && it[0].isEndedGame == 0) {
                 viewModel.addStateActiity(StateOfActivity(it[0].id, 1))
-                viewModelMatch.insertMatch(Match(0, getTodayDate()))
+                Log.d("ispisiUnutra", it.toString())
+                counter++
+                if(counter == 1)
+                    viewModelMatch.insertMatch(Match(0, getTodayDate()))
             }
+            counter++
+            Log.d("ispisi", it.toString())
         })
 
         val listOfHistory = mutableListOf<com.algebra.soccernewtry.game.history.History>()
@@ -218,21 +224,21 @@ class SubmitTeamsActivity : AppCompatActivity() {
 
     override fun onPause() {
         if(checkIfUserLeftApp){
-            var teamId = 0
-            var isAutogoal = 0
             viewModelRunningGame.deleteAll()
             adapterHistory.listOfResults.forEach {
-                teamId = if(it.isRed) 1 else 2
-                isAutogoal = if(it.autoGoal?.isEmpty()!!) 0 else 1
+                val teamId = if(it.isRed) 1 else 2
+                val isAutogoal = if(it.autoGoal?.isEmpty()!!) 0 else 1
                 viewModelRunningGame.addHistory(History(0, it.goalGeterId, it.assisterId, teamId, isAutogoal, it.goalRed, it.goalBlue))
             }
-            Log.d("ispisovo", "jesituuuu")
         }else{
             viewModelRunningGame.deleteAll()
             adapterHistory.listOfResults.clear()
             RedTeamFragment.checkListOfPlayers.clear()
             BlueTeamFragment.checkListOfPlayers.clear()
+            checkIfUserLeftApp = true
         }
+        Log.d("ispisovo", "jesituuuu")
+        Log.d("ispischeck", checkIfUserLeftApp.toString())
         super.onPause()
     }
 

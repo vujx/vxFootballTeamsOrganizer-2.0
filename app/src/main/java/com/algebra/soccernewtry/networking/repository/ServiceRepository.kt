@@ -48,6 +48,7 @@ class ServiceRepository @Inject constructor(private val socialNetworkService: So
         socialNetworkService.getCode("53cr37d0wnl04d70k3n4fuc4", code).enqueue(object: retrofit2.Callback<String>{
             override fun onFailure(call: Call<String>, t: Throwable) {
                 t.message?.let { listener.onFailure(it) }
+                Log.d("ispisError", code.toString())
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {

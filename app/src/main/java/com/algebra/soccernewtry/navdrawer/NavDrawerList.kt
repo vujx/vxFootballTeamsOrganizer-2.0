@@ -53,9 +53,9 @@ class NavDrawerList(private val activity: AppCompatActivity) {
         top250.add("Players")
 
         val nowShowing: MutableList<String> = ArrayList()
+        nowShowing.add("Achievement")
         nowShowing.add("Efficiency")
         nowShowing.add("Realisation")
-        nowShowing.add("Achievement")
         nowShowing.add("History")
 
         val comingSoon: MutableList<String> = ArrayList()

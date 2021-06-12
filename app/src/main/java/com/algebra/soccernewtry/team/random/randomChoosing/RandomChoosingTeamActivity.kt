@@ -83,6 +83,7 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
             dialog.listenerGetChangePlayer = object: DialogForAddingPlayer.Listener{
                 override fun addNewPlayer(player: Player) {
                     viewModel.addPlayer(player)
+                    PlayerAdapter.listOfPlayers.add(player)
                 }
             }
         }

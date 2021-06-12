@@ -47,7 +47,7 @@ class BonusPointsActivity : AppCompatActivity() {
             }
             val listForBonusPoints = mutableListOf<PlayerForBonus>()
             allPlayer.forEach {
-                listForBonusPoints.add(PlayerForBonus(it.name, it.bonusPoints))
+                listForBonusPoints.add(PlayerForBonus(it.name, 0))
             }
 
             if(allPlayer.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"
@@ -86,7 +86,7 @@ class BonusPointsActivity : AppCompatActivity() {
                             adapter.listOfPlayer.forEach {
                                 if(it.bonusPoints != 0){
                                     allPlayer.forEach {player ->
-                                        if(it.name == player.name){
+                                        if(it.name.toLowerCase() == player.name.toLowerCase()){
                                             player.bonusPoints += it.bonusPoints
                                             viewModelPlayer.addPlayer(player)
                                         }

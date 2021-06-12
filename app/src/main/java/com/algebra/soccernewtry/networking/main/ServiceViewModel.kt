@@ -19,11 +19,13 @@ class ServiceViewModel @Inject constructor(private val serviceRepository: Servic
     fun getCode(value: String){
         Log.d("ispis", value)
         getCode = MutableLiveData()
+        errorObserver = MutableLiveData()
         serviceRepository.generateCode(value, object: ServiceRepository.Listener{
             override fun onSuccess(code: String) {
                 getCode.postValue(code)
             }
             override fun onFailure(error: String) {
+
                 errorObserver.postValue("")
                 Log.d("IspisiMiError", error.toString())
             }
@@ -32,6 +34,7 @@ class ServiceViewModel @Inject constructor(private val serviceRepository: Servic
 
     fun deleteCode(code: String){
         deleteCode = MutableLiveData()
+        errorObserver = MutableLiveData()
         serviceRepository.deleteCode(code, object: ServiceRepository.Listener{
             override fun onSuccess(code: String) {
                 deleteCode.postValue(code)
@@ -45,13 +48,15 @@ class ServiceViewModel @Inject constructor(private val serviceRepository: Servic
 
     fun getValueToGenerateDatabase(code: String){
         getValue = MutableLiveData()
+        errorObserver = MutableLiveData()
         serviceRepository.getValues(code, object: ServiceRepository.Listener{
             override fun onSuccess(code: String) {
                 getValue.postValue(code)
             }
 
             override fun onFailure(error: String) {
-                errorObserver.postValue("")
+                errorObserver.postValue(error)
+                Log.d("ispisOvajError", error)
             }
         })
     }

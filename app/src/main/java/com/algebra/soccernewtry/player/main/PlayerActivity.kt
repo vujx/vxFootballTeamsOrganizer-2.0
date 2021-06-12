@@ -3,6 +3,7 @@ package com.algebra.soccernewtry.player.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -37,10 +38,10 @@ class PlayerActivity : AppCompatActivity() {
         setupToolbarAndNavigationDrawer()
         clickListener()
         setUpRecyclerView()
-        bind()
     }
 
-    private fun bind(){
+    override fun onResume() {
+        super.onResume()
         viewModel.getAllPlayers().observe(this, Observer {
             val listWithoutDeletedPlayers = it.filter {
                 it.isDeleted == 0
@@ -50,6 +51,7 @@ class PlayerActivity : AppCompatActivity() {
             adapter.setList(it.filter {
                 it.isDeleted == 0
             })
+            Log.d("dajdaovovidim", it.toString())
             binding.progressBar.visibility = View.GONE
         })
     }

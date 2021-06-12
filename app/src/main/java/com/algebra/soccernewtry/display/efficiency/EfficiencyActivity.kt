@@ -69,7 +69,7 @@ class EfficiencyActivity : AppCompatActivity() {
                 val numOfGoals = viewModelPlayer.getNumberOfGoals(player.id)
                 val numOfAss = viewModelPlayer.getNumberOfAssist(player.id)
                 val numOfAutogoals = viewModelPlayer.getNumberOfAutogoals(player.id)
-                listForStatRealisation.add(PlayerStat(player.id, playerSpec.name, wins, loses, draw, numOfGoals, numOfAss, numOfAutogoals, playerSpec.attendance, 0))
+                listForStatRealisation.add(PlayerStat(player.id, playerSpec.name, wins, loses, draw, numOfGoals, numOfAss, numOfAutogoals, playerSpec.attendance, playerSpec.bonusPoints))
 
             }
             if(listForStatRealisation.isEmpty()) binding.tvDisplay.text = "You don't have any players added!"

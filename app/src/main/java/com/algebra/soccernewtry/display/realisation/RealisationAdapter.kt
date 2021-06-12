@@ -137,9 +137,12 @@ class RealisationAdapter: RecyclerView.Adapter<RealisationAdapter.RealisationVie
     override fun onBindViewHolder(holder: RealisationViewHolder, position: Int) {
         val bestGoalGetter = getBestGoalGetter()
         val maxAssist = getMaxAssist()
+        if(bestGoalGetter.isNotEmpty() && bestGoalGetter[0].numberOfGoal != 0)
         bestGoalGetter.forEach {
             if(it.id == listOfRealisation[position].id) holder.itemRealisation.tvWins.setTextColor(Color.RED)
         }
+
+        if(maxAssist.isNotEmpty() && maxAssist[0].asistent != 0)
         maxAssist.forEach {
             if(it.id == listOfRealisation[position].id)  holder.itemRealisation.tvLoses.setTextColor(Color.RED)
         }

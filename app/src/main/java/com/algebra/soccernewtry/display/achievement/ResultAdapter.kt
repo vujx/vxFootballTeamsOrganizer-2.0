@@ -122,10 +122,12 @@ class ResultAdaper: RecyclerView.Adapter<ResultAdaper.ResultViewHolder>() {
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
         holder.bind(listOfResults[position])
         val listOfPlayersWithMaxWins = getlistOfPlayersWithMaxWins()
+        if(listOfPlayersWithMaxWins.isNotEmpty() && listOfPlayersWithMaxWins[0].wins != 0)
         listOfPlayersWithMaxWins.forEach {
             if(it.id == listOfResults[position].id) holder.itemResult.tvWins.setTextColor(Color.RED)
         }
         val listOfPlayersWithMaxLoses = getlistOfPlayersWithMaxLoses()
+        if(listOfPlayersWithMaxLoses.isNotEmpty() && listOfPlayersWithMaxLoses[0].loses != 0)
         listOfPlayersWithMaxLoses.forEach {
             if(it.id == listOfResults[position].id) holder.itemResult.tvLoses.setTextColor(Color.RED)
         }

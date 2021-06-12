@@ -24,9 +24,7 @@ class PlayerRepository @Inject constructor(private val databaseAllPlayers: AppDa
     }
 
     suspend fun getAllPlayers(): List<Player>{
-        return playerDao.getAllPlayersForStat().filter {
-            it.isDeleted == 0
-        }
+        return playerDao.getAllPlayersForStat()
     }
 
     fun getAllPlayerLiveRepo() = playerDao.getAllPlayers()

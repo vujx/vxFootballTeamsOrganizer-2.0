@@ -32,6 +32,7 @@ interface PlayerDao {
     @Query("SELECT ap.id AS id, ap.name AS name, ap.bonusPoints AS bonusPoints, COUNT(mp.matchId) AS attendance FROM AllPlayers ap\n" +
             "LEFT JOIN MatchPlayer mp ON mp.playerId = ap.id\n" +
             "WHERE ap.id = :id")
+
     suspend fun getAllPlayerStat(id: Int): PlayerSpecification
 
     @Query("SELECT COUNT(*) FROM MatchFlow WHERE goalgetterId = :id AND isAutoGoal = 0")

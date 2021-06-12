@@ -145,7 +145,16 @@ class CodeFragment : Fragment() {
                     if(checkQueryMatchPlayers != "S")
                         viewModelMatches.insertValue(queryMatchPlayers)
                     binding.etEnterCode.setText("")
+
+                    binding.etEnterCode.setText("")
                     displayMessage(requireActivity() as AppCompatActivity, "You downloaded a shared database")
+                })
+
+                viewModelService.errorObserver.observe(requireActivity(), Observer {
+                    if("Expected a string but was BEGIN_OBJECT at path $" == it)
+                        binding.etEnterCode.error = "You have entered wrong code, try again!"
+                    else
+                        onFailureShareCode()
                 })
             }
         }
