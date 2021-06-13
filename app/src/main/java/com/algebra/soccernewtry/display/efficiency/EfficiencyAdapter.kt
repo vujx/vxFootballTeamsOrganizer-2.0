@@ -15,11 +15,11 @@ class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<Efficie
         listOfEfficieny.clear()
         listOfEfficieny.addAll(list)
         listOfEfficieny.sortBy {
-            it.name
+            it.name.toLowerCase()
         }
         listOfEfficieny.sortWith(compareByDescending<PlayerStat> {
             it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints
-        }.thenBy { it.attendance })
+        })
 
         notifyDataSetChanged()
     }

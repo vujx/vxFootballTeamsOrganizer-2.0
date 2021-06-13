@@ -27,4 +27,10 @@ class MatchPlayerRepository @Inject constructor(private val databaseAllPlayers: 
     }
 
     suspend fun getAll() = matchPlayerDao.getAll()
+
+    fun deleteAllMatchPlayersForMatch(matchId: Int){
+        databaseExecutor.execute {
+            matchPlayerDao.deleteMatchPlayers(matchId)
+        }
+    }
 }

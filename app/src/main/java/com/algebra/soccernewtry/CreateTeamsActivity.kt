@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityCreateTeamsBinding
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
@@ -16,6 +17,9 @@ import com.algebra.soccernewtry.stateactivity.model.StateOfActivity
 import com.algebra.soccernewtry.team.random.own.ChooseYourOwnActivity
 import com.algebra.soccernewtry.team.random.randomChoosing.RandomChoosingTeamActivity
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 
 @AndroidEntryPoint
 class CreateTeamsActivity : AppCompatActivity() {
@@ -32,6 +36,7 @@ class CreateTeamsActivity : AppCompatActivity() {
         setupToolbarAndNavigationDrawer()
         clickListeners()
         bind()
+        showCaseView()
     }
 
     private fun bind(){
@@ -65,5 +70,35 @@ class CreateTeamsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         exitApp(this)
+    }
+
+    private fun showCaseView(){
+        val config = ShowcaseConfig()
+
+        val sequence = MaterialShowcaseSequence(this, Constants.SHOWCASE_ID_SETUP)
+        sequence.setConfig(config)
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnRandomPicker)
+                .setDismissText("GOT IT")
+                .setContentText("Button for creating random teams!")
+                .setShapePadding(16)
+                .withRectangleShape(false)
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnYourPickTeam)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button for creating your own teams!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+        sequence.start()
     }
 }

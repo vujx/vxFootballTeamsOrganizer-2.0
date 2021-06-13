@@ -117,6 +117,10 @@ class SubmitTeamsActivity : AppCompatActivity() {
                 if(listOfHistory.isNotEmpty()){
                     RedTeamFragment.goalRed = adapterHistory.listOfResults[adapterHistory.listOfResults.size - 1].goalRed
                     RedTeamFragment.goalBlue = adapterHistory.listOfResults[adapterHistory.listOfResults.size - 1].goalBlue
+                    if(frgRed.view != null)
+                        setScoreRed()
+                    if(frgBlut.view != null)
+                        setScore()
                 }
             }
         }
@@ -186,7 +190,7 @@ class SubmitTeamsActivity : AppCompatActivity() {
     fun endMatchOperation(){
         lifecycleScope.launchWhenResumed {
             viewModelPlayers.getAllPlayersForStat().forEach {
-                if(it.isPlaying == 1 && it.isDeleted != 1) viewModelPlayers.addPlayer(Player(it.id, it.name, it.defense, it.agility, it.technique,
+                if((it.isPlaying == 1 && it.isDeleted != 1) || (it.teamId != 0 &&  it.isDeleted != 1)) viewModelPlayers.addPlayer(Player(it.id, it.name, it.defense, it.agility, it.technique,
                     0,0, it.bonusPoints, it.isDeleted))
             }
         }

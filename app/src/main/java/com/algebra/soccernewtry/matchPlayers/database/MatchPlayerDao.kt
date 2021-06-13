@@ -22,4 +22,7 @@ interface MatchPlayerDao {
     @Query("SELECT * FROM MatchPlayer")
     suspend fun getAll(): List<MatchPlayer>
 
+    @Query("DELETE FROM MatchPlayer WHERE :matchId = matchId")
+    fun deleteMatchPlayers(matchId: Int)
+
 }

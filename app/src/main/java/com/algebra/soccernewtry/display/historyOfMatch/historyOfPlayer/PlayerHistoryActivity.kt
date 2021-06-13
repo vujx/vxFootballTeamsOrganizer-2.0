@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityPlayerBinding
 import com.algebra.soccernewtry.databinding.ActivityPlayerHistoryBinding
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
@@ -25,7 +26,7 @@ class PlayerHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        matchId = intent.getIntExtra("d", 0)
+        matchId = intent.getIntExtra(Constants.MATCH_ID, 0)
         setUpViewPager()
         setupToolbarAndNavigationDrawer()
     }

@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.algebra.soccernewtry.R
 import com.algebra.soccernewtry.additional.actions.*
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.FragmentMoreActionsBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.displayMessage
@@ -27,6 +28,9 @@ import com.algebra.soccernewtry.player.repository.PlayerRepository
 import com.algebra.soccernewtry.shareCode.main.ShareCodeViewModel
 import com.algebra.soccernewtry.shareCode.model.ShareCode
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 
 @AndroidEntryPoint
 class MoreActionsFragment : Fragment() {
@@ -49,6 +53,7 @@ class MoreActionsFragment : Fragment() {
     ): View? {
         _binding = FragmentMoreActionsBinding.inflate(inflater, container, false)
         clickListener()
+        showView()
         return binding.root
     }
 
@@ -134,6 +139,60 @@ class MoreActionsFragment : Fragment() {
         val dialog = DialogCheck(title)
         dialog.show(requireActivity().supportFragmentManager, tag)
         return dialog
+    }
+
+    private fun showView(){
+        val config = ShowcaseConfig()
+
+        val sequence = MaterialShowcaseSequence(requireActivity(), Constants.SHOWCASE_ID_MOREACTIONS)
+        sequence.setConfig(config)
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setSkipText("SKIP")
+                .setTarget(binding.btnShareDatabase)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button for getting code which you can share with others!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setSkipText("SKIP")
+                .setTarget(binding.btnRefreshAll)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button for clearing all data!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setSkipText("SKIP")
+                .setTarget(binding.btnResetAll)
+                .setDismissText("GOT IT")
+                .setContentText("Button for deleting all data entries!")
+                .setShapePadding(16)
+                .withRectangleShape(false)
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setSkipText("SKIP")
+                .setTarget(binding.btnCSV)
+                .setDismissText("GOT IT")
+                .setContentText("Button for exporting to CSV file!")
+                .setShapePadding(16)
+                .withRectangleShape(false)
+                .build()
+        )
+
+        sequence.start()
     }
 
     companion object {

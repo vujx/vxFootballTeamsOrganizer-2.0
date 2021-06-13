@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.algebra.soccernewtry.additional.actions.MoreActionsActivity
 import com.algebra.soccernewtry.additional.actions.isInternetAvailable
 import com.algebra.soccernewtry.additional.actions.verifyAvailableNetwork
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.FragmentCodeBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.displayMessage
@@ -27,6 +28,9 @@ import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.shareCode.main.ShareCodeViewModel
 import com.algebra.soccernewtry.shareCode.model.ShareCode
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 
 @AndroidEntryPoint
 class CodeFragment : Fragment() {
@@ -165,6 +169,32 @@ class CodeFragment : Fragment() {
         viewModelMatchPlayer.deleteAllMatchPlayers()
         viewModelPlayer.deleteAll()
         viewModelMatches.deleteAllMatches()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (this.isVisible) {
+            showView()
+        }
+    }
+
+    fun showView(){
+        val config = ShowcaseConfig()
+
+        val sequence = MaterialShowcaseSequence(requireActivity(), Constants.SHOWCASE_ID_CODE)
+        sequence.setConfig(config)
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(requireActivity())
+                .setTarget(binding.btnGenerateCode)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button for downloading a share database with inputted code!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+        sequence.start()
     }
 
     companion object {

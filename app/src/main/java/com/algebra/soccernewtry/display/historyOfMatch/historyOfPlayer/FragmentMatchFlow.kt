@@ -47,16 +47,16 @@ class FragmentMatchFlow : Fragment() {
                 var scoreBlue = 0
                 val listOfMatchFlow = viewModel.getAllMatchFlowByMatchId(PlayerHistoryActivity.matchId)
                 val allPlayers = viewModelPlayer.getAllPlayersForStat()
-
-                Log.d("Ispisi", allPlayers.toString())
+                Log.d("IspisOvo", listOfMatchFlow.toString())
                 var teamId = 0
                 listOfMatchFlow.forEach {
-                    if(it.teamId == 1 && it.isAutoGoal == 0 || it.teamId == 2 && it.isAutoGoal == 1)
+                    if((it.teamId == 1 && it.isAutoGoal == 0) || (it.teamId == 1 && it.isAutoGoal == 1))
                     {
                         scoreRed += 1
                         teamId = 1
+                        Log.d("Zastuneude", "dsas")
                     }
-                    if(it.teamId == 2 && it.isAutoGoal == 0 || it.teamId == 1 && it.isAutoGoal == 1){
+                    if(it.teamId == 2 && it.isAutoGoal == 0 || it.teamId == 2 && it.isAutoGoal == 1){
                         scoreBlue += 1
                         teamId = 2
                     }
@@ -81,7 +81,8 @@ class FragmentMatchFlow : Fragment() {
                             adapterHistory.addResult(history)
                         }
                     } else {
-                        val history = History(scoreRed, scoreBlue, "", "", false, it.id, goalGetterName, it.goalgetterId, it.assisterId)
+                        val isRed = teamId == 1
+                        val history = History(scoreRed, scoreBlue, "", "", isRed, it.id, goalGetterName, it.goalgetterId, it.assisterId)
                         adapterHistory.addResult(history)
                     }
                 }
@@ -132,12 +133,31 @@ class FragmentMatchFlow : Fragment() {
                                     }
                                 }
                             }
+                            setNewList()
                         }
                     }
-
                 }
             }
+        }
+    }
 
+    private fun setNewList(){
+        requireActivity().lifecycleScope.launchWhenResumed {
+            val redTeam = viewModel.getRedTeam(PlayerHistoryActivity.matchId)
+            FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore.clear()
+            redTeam.forEach {
+                FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore.add(viewModel.getMatchScore(it, PlayerHistoryActivity.matchId))
+            }
+            FragmentRedTeamHistoryOfPlayers.adapterTeam.setList(FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore)
+
+            val blueTeam = viewModel.getBlueTeam(PlayerHistoryActivity.matchId)
+            val listOfBlueTeamMatchScore = mutableListOf<PlayerMatchScore>()
+            blueTeam.forEach {
+                listOfBlueTeamMatchScore.add(viewModel.getMatchScore(it, PlayerHistoryActivity.matchId))
+            }
+            Log.d("IspisiRedTeam", FragmentRedTeamHistoryOfPlayers.listOfRedTeamMatchScore.toString())
+            Log.d("IspisiBlueTeam", listOfBlueTeamMatchScore.toString())
+            FragmentBlueTeamHistoryOfPlayer.adapterTeam.setList(listOfBlueTeamMatchScore)
         }
     }
 

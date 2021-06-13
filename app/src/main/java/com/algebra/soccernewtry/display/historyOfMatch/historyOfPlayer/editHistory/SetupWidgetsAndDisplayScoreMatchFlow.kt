@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.algebra.fuca.game.teams.SubmitTeamsAdapter
 import com.algebra.soccernewtry.R
-import com.algebra.soccernewtry.game.SubmitTeamsActivity
-import com.algebra.soccernewtry.game.teams.red.RedTeamFragment
 
 class SetupWidgetsAndDisplayScoreMatchFlow{
 

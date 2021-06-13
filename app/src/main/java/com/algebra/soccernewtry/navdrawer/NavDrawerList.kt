@@ -9,6 +9,7 @@ import com.algebra.soccernewtry.CreateTeamsActivity
 import com.algebra.soccernewtry.R
 import com.algebra.soccernewtry.additional.actions.MoreActionsActivity
 import com.algebra.soccernewtry.bonus.BonusPointsActivity
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.display.achievement.ResultActivity
 import com.algebra.soccernewtry.display.efficiency.EfficiencyActivity
@@ -110,14 +111,6 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                         }
                     }
                 }
-            }
-            false
-
-
-            /*    */
-
-            /*
-
                 "Restart Showcase" -> {
                     Constants.SHOWCASE_ID_MOREACTIONS += "J"
                     Constants.SHOWCASE_ID_CODE += "J"
@@ -132,7 +125,7 @@ class NavDrawerList(private val activity: AppCompatActivity) {
                     activity.startActivity(intent)
                 }
             }
-            false*/
+            false
         }
     }
 

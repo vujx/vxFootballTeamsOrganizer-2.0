@@ -21,6 +21,7 @@ import com.algebra.soccernewtry.player.addplayer.DialogForAddingPlayer
 import com.algebra.soccernewtry.player.editPlayer.DialogForEditPlayer
 import com.algebra.soccernewtry.player.model.Player
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {
@@ -38,6 +39,7 @@ class PlayerActivity : AppCompatActivity() {
         setupToolbarAndNavigationDrawer()
         clickListener()
         setUpRecyclerView()
+        showView()
     }
 
     override fun onResume() {
@@ -109,6 +111,18 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return SetupToolbarDrawer(this, binding.root).onOptionsItemSelected(item)
+    }
+
+    private fun showView(){
+        // single example
+        MaterialShowcaseView.Builder(this)
+            .setTarget(binding.btnAddInRecaclerView)
+            .setDismissText("GOT IT")
+            .setContentText("Button for creating new players!")
+            .singleUse(Constants.SHOWCASE_ID_PLAYER) // provide a unique ID used to ensure it is only shown once
+            .show()
+
+
     }
 
     override fun onBackPressed() {

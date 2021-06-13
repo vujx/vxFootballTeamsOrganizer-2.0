@@ -8,11 +8,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityHistoryMatchBinding
 import com.algebra.soccernewtry.dialog.DialogCheck
 import com.algebra.soccernewtry.display.historyOfMatch.historyOfPlayer.PlayerHistoryActivity
 import com.algebra.soccernewtry.exitApp
 import com.algebra.soccernewtry.historyOfGame.main.MatchViewModel
+import com.algebra.soccernewtry.matchFlow.main.MatchFlowViewModel
+import com.algebra.soccernewtry.matchPlayers.main.MatchPlayerViewModel
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +27,7 @@ class HistoryMatchActivity : AppCompatActivity() {
     private val navDrawerListExpandable = NavDrawerList(this)
     private val adapter = HistoryOfGameAdapter(this)
     private val viewModelMatch: MatchViewModel by viewModels()
+    private val viewModelMatchPlayers: MatchPlayerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityHistoryMatchBinding.inflate(layoutInflater)
@@ -51,7 +55,7 @@ class HistoryMatchActivity : AppCompatActivity() {
         adapter.listener = object: HistoryOfGameAdapter.Listener{
             override fun getDetailsAboutMatch(id: Int) {
                 val intent = Intent(this@HistoryMatchActivity ,PlayerHistoryActivity::class.java)
-                intent.putExtra("d", id)
+                intent.putExtra(Constants.MATCH_ID, id)
                 startActivity(intent)
             }
 
@@ -63,6 +67,7 @@ class HistoryMatchActivity : AppCompatActivity() {
                         if(isPress){
                             viewModelMatch.deleteMatch(id)
                             viewModelMatch.deleteMatchFlowOfMatch(id)
+                            viewModelMatchPlayers.deleteMatchPlayersForMatch(id)
                         }
                     }
                 }

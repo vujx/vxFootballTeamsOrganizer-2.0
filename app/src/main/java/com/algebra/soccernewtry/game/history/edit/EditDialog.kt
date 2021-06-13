@@ -38,6 +38,7 @@ class EditDialog(private val history: History) : DialogFragment() {
         setUpTeamsResult()
 
         val alertDialog = setupAndDisplay.setupAlerDialog(view, requireContext())
+        alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             setToDefulat()
             setNewChanges(RedTeamFragment.checkListOfPlayers, BlueTeamFragment.checkListOfPlayers)
@@ -48,6 +49,13 @@ class EditDialog(private val history: History) : DialogFragment() {
                 checkAutoGol -> checkAutogoal(alertDialog)
                 else -> setupAndDisplay.displayErrorMessage(requireContext())
             }
+        }
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
+            clearAddToDatabaseAndSetup()
+            alertDialog.dismiss()
+        }
+        alertDialog.setOnDismissListener {
+            clearAddToDatabaseAndSetup()
         }
         return alertDialog
     }
@@ -174,11 +182,10 @@ class EditDialog(private val history: History) : DialogFragment() {
             if (it.name.toLowerCase() == newGoalGeter.toLowerCase()) goalgetterId = it.id
             if (it.name.toLowerCase() == newAssist.toLowerCase()) assisterId = it.id
         }
-        if (goalgetterId != -1)
-            BlueTeamFragment.checkListOfPlayers.forEach {
+        BlueTeamFragment.checkListOfPlayers.forEach {
                 if (it.name.toLowerCase() == newGoalGeter.toLowerCase()) goalgetterId = it.id
                 if (it.name.toLowerCase() == newAssist.toLowerCase()) assisterId = it.id
-            }
+        }
         if (!check) SubmitTeamsActivity.adapterHistory.editResult(
             History(history.goalRed, history.goalBlue, newAssist, newGoalGeter,
                 history.isRed, 0, "", goalgetterId, assisterId))

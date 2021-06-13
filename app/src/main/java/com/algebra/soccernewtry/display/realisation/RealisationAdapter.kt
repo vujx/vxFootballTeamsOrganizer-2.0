@@ -15,10 +15,11 @@ class RealisationAdapter: RecyclerView.Adapter<RealisationAdapter.RealisationVie
     fun setListRealisation(list: List<PlayerStat>){
         listOfRealisation.clear()
         listOfRealisation.addAll(list)
-        listOfRealisation.sortBy { it.name }
+        listOfRealisation.sortBy { it.name.toLowerCase() }
         listOfRealisation.sortWith(compareByDescending<PlayerStat> {
             it.numberOfGoal
-        }.thenBy { it.attendance })
+        })
+
 
         notifyDataSetChanged()
     }

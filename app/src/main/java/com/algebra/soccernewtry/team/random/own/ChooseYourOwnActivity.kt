@@ -20,6 +20,9 @@ import com.algebra.soccernewtry.player.addplayer.DialogForAddingPlayer
 import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.player.model.Player
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 
 @AndroidEntryPoint
 class ChooseYourOwnActivity : AppCompatActivity() {
@@ -40,6 +43,7 @@ class ChooseYourOwnActivity : AppCompatActivity() {
         bind()
         clickListener()
         setUpRecyclerView()
+        showCaseView()
     }
 
     private fun setUpRecyclerView(){
@@ -148,5 +152,33 @@ class ChooseYourOwnActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return SetupToolbarDrawer(this, binding.root).onOptionsItemSelected(item)
+    }
+
+    private fun showCaseView(){
+        val config = ShowcaseConfig()
+
+        val sequence = MaterialShowcaseSequence(this, Constants.SHOWCASE_ID_OWN)
+        sequence.setConfig(config)
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnAddInRecaclerView)
+                .setDismissText("GOT IT")
+                .setContentText("Button for creating new players!")
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnSubmitTeams)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button for submitting your own teams!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+        sequence.start()
     }
 }

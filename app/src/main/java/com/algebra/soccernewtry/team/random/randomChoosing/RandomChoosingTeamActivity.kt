@@ -19,6 +19,9 @@ import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.player.model.Player
 import com.algebra.soccernewtry.team.random.randompicking.GeneratedRandomTeamsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 
 @AndroidEntryPoint
 class RandomChoosingTeamActivity : AppCompatActivity() {
@@ -37,6 +40,7 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
         setUpRecyclerView()
         bind()
         clickListener()
+        showView()
     }
 
     private fun setUpRecyclerView(){
@@ -110,4 +114,31 @@ class RandomChoosingTeamActivity : AppCompatActivity() {
         navDrawerListExpandable.prepareListData()
     }
 
+    private fun showView(){
+        val config = ShowcaseConfig()
+
+        val sequence = MaterialShowcaseSequence(this, Constants.SHOWCASE_ID_RANDOM)
+        sequence.setConfig(config)
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnAddInRecaclerView)
+                .setDismissText("GOT IT")
+                .setContentText("Button for creating new players!")
+                .build()
+        )
+
+        sequence.addSequenceItem(
+            MaterialShowcaseView.Builder(this)
+                .setSkipText("SKIP")
+                .setTarget(binding.btnRandomPicker)
+                .setShapePadding(16)
+                .setDismissText("GOT IT")
+                .setContentText("Button that generates random teams!")
+                .withRectangleShape()
+                .setShapePadding(16)
+                .build()
+        )
+        sequence.start()
+    }
 }

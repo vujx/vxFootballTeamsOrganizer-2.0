@@ -17,11 +17,11 @@ class ResultAdaper: RecyclerView.Adapter<ResultAdaper.ResultViewHolder>() {
         listOfResults.addAll(list)
 
         listOfResults.sortBy {
-            it.name
+            it.name.toLowerCase()
         }
         listOfResults.sortWith(compareByDescending<PlayerStat> {
             it.wins
-        }.thenBy { it.attendance })
+        })
         notifyDataSetChanged()
     }
 
