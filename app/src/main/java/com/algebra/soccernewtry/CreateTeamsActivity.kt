@@ -3,13 +3,11 @@ package com.algebra.soccernewtry
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivityCreateTeamsBinding
-import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.navdrawer.NavDrawerList
 import com.algebra.soccernewtry.navdrawer.SetupToolbarDrawer
 import com.algebra.soccernewtry.stateactivity.main.StateActivityViewModel

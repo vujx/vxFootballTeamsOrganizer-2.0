@@ -7,11 +7,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.algebra.soccernewtry.constants.Constants
 import com.algebra.soccernewtry.databinding.ActivitySplashBinding
-import com.algebra.soccernewtry.game.PlayerCheck
 import com.algebra.soccernewtry.game.SubmitTeamsActivity
 import com.algebra.soccernewtry.player.main.PlayerViewModel
 import com.algebra.soccernewtry.player.model.Player
-import com.algebra.soccernewtry.runningGame.main.RunningGameViewModel
 import com.algebra.soccernewtry.stateactivity.main.StateActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +19,7 @@ class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
     private val viewModel: StateActivityViewModel by viewModels()
     private val viewModelPlayers: PlayerViewModel by viewModels()
+    var checkIfPause = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -30,9 +29,14 @@ class SplashActivity : AppCompatActivity() {
         bind()
     }
 
+    override fun onPause() {
+        super.onPause()
+        checkIfPause = true
+    }
+
     private fun bind() {
 
-        viewModel.getStateOfActivity().observe(this, Observer {
+        viewModel.getStateOfActivity().observe(this , Observer {
             if (it.isNotEmpty() && it[0].isEndedGame == 1) {
                 val redTeam = mutableListOf<Player>()
                 val blueTeam = mutableListOf<Player>()
@@ -52,8 +56,10 @@ class SplashActivity : AppCompatActivity() {
                 })
             }
             else {
-                val intent = Intent(this, CreateTeamsActivity::class.java)
-                startActivity(intent)
+                if(!checkIfPause){
+                    val intent = Intent(this, CreateTeamsActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
     }
