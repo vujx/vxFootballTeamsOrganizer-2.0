@@ -63,7 +63,7 @@ class FragmentInformation : Fragment() {
             binding.tvEnterWins.text = wins.toString()
             binding.tvEnterLosses.text = loses.toString()
             binding.tvEnterAutogoals.text = numOfAutogoals.toString()
-            binding.tvEnterScore.text = (wins*3 + draw + numOfGoals*2 + numOfAss*2 + getInformation().bonusPoints).toString()
+            binding.tvEnterScore.text = (wins*3 + draw + numOfGoals*2 + numOfAss*2 + getInformation().bonusPoints - numOfAutogoals).toString()
             binding.tvEnterDraw.text = draw.toString()
 
         }

@@ -1,11 +1,13 @@
 package com.algebra.fuca.display.efficiency
 
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.algebra.soccernewtry.databinding.ItemResultBinding
 import com.algebra.soccernewtry.display.achievement.PlayerStat
+import kotlin.math.abs
 
 class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<EfficiencyAdapter.EfficiencyViewHolder>() {
 
@@ -18,7 +20,7 @@ class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<Efficie
             it.name.toLowerCase()
         }
         listOfEfficieny.sortWith(compareByDescending<PlayerStat> {
-            it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints
+            it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints - it.autoGoal
         })
 
         notifyDataSetChanged()
@@ -28,21 +30,23 @@ class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<Efficie
         var maxScore = 0
         listOfEfficieny.forEach {
             if(it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints > maxScore)
-                maxScore = it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints
+                maxScore = it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints - it.autoGoal
         }
         val listOfPlayerWithBestScore = listOfEfficieny.filter {
-            maxScore == it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints
+            maxScore == it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints - it.autoGoal
         }
         return if(listOfPlayerWithBestScore.size == 1)
             listOfPlayerWithBestScore
         else {
-            var minArrivals = listOfPlayerWithBestScore[0].attendance
+            var minArrivals = 0
+            if(!listOfPlayerWithBestScore.isEmpty())
+              minArrivals = listOfPlayerWithBestScore[0].attendance
             listOfPlayerWithBestScore.forEach {
                 if(it.attendance < minArrivals) minArrivals = it.attendance
             }
             val averageScore = maxScore.toDouble() / minArrivals
             listOfPlayerWithBestScore.filter {
-                (it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints).toDouble()/it.attendance == averageScore
+                (it.numberOfGoal*2 + it.asistent*2 + it.wins*3 + it.draw + it.bonusPoints - it.autoGoal).toDouble()/it.attendance == averageScore
             }
         }
     }
@@ -69,16 +73,13 @@ class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<Efficie
     inner class EfficiencyViewHolder(val itemEfficiency: ItemResultBinding): RecyclerView.ViewHolder(itemEfficiency.root){
         fun bind(player: PlayerStat){
 
-            val scoreValue = player.numberOfGoal*2 + player.asistent*2 + player.wins*3 + player.draw + player.bonusPoints
+            var scoreValue = player.numberOfGoal*2 + player.asistent*2 + player.wins*3 + player.draw + player.bonusPoints - player.autoGoal
             itemEfficiency.tvPlayer.text = player.name
             itemEfficiency.tvWins.text = scoreValue.toString()
             itemEfficiency.tvLoses.text = player.bonusPoints.toString()
             itemEfficiency.tvDraw.text = player.attendance.toString()
 
-           // val getAllGames = DatabaseMethodsHistoryOfGame().getAllHistoryOfGame(requireActivity).size
-            //dodati ukupan broj odigranih gameova
-
-            var average = (scoreValue.toDouble() / player.attendance)
+            var average = (scoreValue.toDouble()  / player.attendance)
             if(numOfAllMatches == 0) average = 0.0
             val averageRound = Math.round(average * 100.0) / 100.0
 
@@ -109,7 +110,11 @@ class EfficiencyAdapter(val numOfAllMatches: Int) : RecyclerView.Adapter<Efficie
                 else itemEfficiency.tvAverageDraw.text = "0%"
             } else itemEfficiency.tvAverageDraw.text = "${averageRoundArriavals.toInt()}%"
 
-            var averageBonusPoints = (player.bonusPoints.toDouble() / scoreValue) * 100.0
+            if(abs(player.bonusPoints) > scoreValue){
+                scoreValue = abs(player.bonusPoints) + abs(scoreValue)
+            }
+
+            var averageBonusPoints = (abs(player.bonusPoints.toDouble()) / abs(scoreValue)) * 100.0
             if(scoreValue == 0) averageBonusPoints = 0.0
             val averageBonusPointsRound = Math.round(averageBonusPoints * 100.0) / 100.0
 

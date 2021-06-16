@@ -3,6 +3,7 @@ package com.algebra.soccernewtry
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.algebra.soccernewtry.constants.Constants
@@ -56,6 +57,7 @@ class SplashActivity : AppCompatActivity() {
                 })
             }
             else {
+                Log.d("ispisiovo", checkIfPause.toString())
                 if(!checkIfPause){
                     val intent = Intent(this, CreateTeamsActivity::class.java)
                     startActivity(intent)
